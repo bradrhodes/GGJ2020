@@ -85,6 +85,12 @@ public class MapPresenter : MonoBehaviour
                     case WallCell cell:
                         Instantiate(brokenWall, new Vector3(x, y, 0), Quaternion.identity, map);
                         break;
+                    case StartCell cell:
+                        Instantiate(path, new Vector3(x, y, 0), Quaternion.identity, map);
+                        break;
+                    case GoalCell cell:
+                        Instantiate(path, new Vector3(x, y, 0), Quaternion.identity, map);
+                        break;
                     default:
                         throw new NotImplementedException("Unknown cell type");
                 }
@@ -151,6 +157,7 @@ public class MapPresenter : MonoBehaviour
             }
         }
     }
+
 
     private GameObject GetRandomTile(IEnumerable<TileThreshold> tileThresholds)
     {
