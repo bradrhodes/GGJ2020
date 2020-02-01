@@ -10,16 +10,18 @@ public class EnemySpawnPresenter : MonoBehaviour
 	[Inject]
 	public EnemiesAggregate Enemies { private get; set; }
 
+	[Inject]
+	public IFactory<EnemyParameters, EnemyPresenter> EnemyFactory { private get; set; }
+
 	private void Start()
 	{
 		Enemies.Events
 			.OfType<EnemiesEvent, EnemiesEvent.EnemySpawned>()
-			.Subscribe(_ => SpawnEnemy());
+			.Subscribe(enemySpawned => SpawnEnemy(enemySpawned.EnemyId));
 	}
 
-	private void SpawnEnemy()
+	private void SpawnEnemy(EnemyIdentifier enemyId)
 	{
-		var enemy = Instantiate(EnemyPrefab);
-		enemy.transform.position = transform.position;
+		EnemyFactory.Create(new EnemyParameters(enemyId, transform.position));
 	}
 }

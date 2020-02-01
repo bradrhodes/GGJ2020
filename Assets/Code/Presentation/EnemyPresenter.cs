@@ -1,20 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 {
 	public float Velocity;
 
-	public EnemyIdentifier Id { get; } = EnemyIdentifier.Create();
+	[Inject]
+	public EnemyParameters Parameters { private get; set; }
 
-	// Start is called before the first frame update
+	public EnemyIdentifier Id => Parameters.EnemyId;
+
 	void Start()
 	{
-
+		transform.position = Parameters.Position;
 	}
 
-	// Update is called once per frame
 	void Update()
 	{
 		transform.position += Velocity * transform.up * Time.deltaTime;
@@ -22,8 +24,8 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		Debug.Log("I got hit!");
+		Debug.Log($"{Id} got hit!");
 
-		GameObject.Destroy(gameObject);
+		Destroy(gameObject);
 	}
 }
