@@ -47,6 +47,19 @@ public class MapPresenter : MonoBehaviour
         Observable.NextFrame().Subscribe(_ => CreateLevel());
     }
 
+    void Update()
+    {
+        //Handle clicks
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 clickedPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var xCoordinate = (int)Math.Round(clickedPosition.x);
+            var yCoordinate = (int)Math.Round(clickedPosition.y);
+
+            MapAggregate.ClickMapCell(xCoordinate, yCoordinate);
+        }
+    }
+
     private void CreateLevel()
     {
         // for now we're just going to ignore different tower types
