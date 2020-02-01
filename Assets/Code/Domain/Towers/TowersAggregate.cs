@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -10,6 +11,10 @@ public class TowersAggregate
 
 	public IObservable<TowersEvent> Events => _events;
 
+	private Dictionary<TowerIdentifier, List<EnemyIdentifier>> _enemiesInRange = new Dictionary<TowerIdentifier, List<EnemyIdentifier>>();
+
+	private Dictionary<TowerIdentifier, EnemyIdentifier> _targettedEnemies = new Dictionary<TowerIdentifier, EnemyIdentifier>();
+
 	public void Initialize(params InitialTower[] towers)
 	{
 		Emit(new TowersEvent.Initialized(towers));
@@ -17,12 +22,38 @@ public class TowersAggregate
 
 	public void AddEnemy(TowerIdentifier towerId, EnemyIdentifier enemyId)
 	{
+		if (!_enemiesInRange.TryGetValue(towerId, out var enemies))
+			enemies = _enemiesInRange[towerId] = new List<EnemyIdentifier>();
 
+		enemies.Add(enemyId);
+
+		if (!_targettedEnemies.ContainsKey(towerId))
+		{
+			_targettedEnemies[towerId] = enemyId;
+			Emit(new TowersEvent.EnemyTargetted(towerId, enemyId));
+		}
 	}
 
-	public void RemoveEnemy(TowerIdentifier towerId, EnemyIdentifier id)
+	public void RemoveEnemy(TowerIdentifier towerId, EnemyIdentifier enemyId)
 	{
+		if (!_enemiesInRange.TryGetValue(towerId, out var enemies))
+			enemies = _enemiesInRange[towerId] = new List<EnemyIdentifier>();
 
+		enemies.Remove(enemyId);
+
+		if (_targettedEnemies.TryGetValue(towerId, out var currentTargetId) && enemyId == currentTargetId)
+		{
+			Emit(new TowersEvent.EnemyUntargetted(towerId, enemyId));
+			_targettedEnemies.Remove(towerId);
+
+			if (enemies.Any())
+			{
+				var newTargetId = enemies.First();
+
+				_targettedEnemies[towerId] = newTargetId;
+				Emit(new TowersEvent.EnemyTargetted(towerId, newTargetId));
+			}
+		}
 	}
 
 	private void Emit(TowersEvent @event)
@@ -41,38 +72,6 @@ public class InitialTower
 	public MapCoordinate Coordinate { get; }
 }
 
-public class TowerIdentifier : IEquatable<TowerIdentifier>
-{
-	private static int _nextId;
-	private readonly int _id;
-
-	private TowerIdentifier(int id)
-	{
-		_id = id;
-	}
-
-	public static TowerIdentifier Create()
-		=> new TowerIdentifier(_nextId++);
-
-	public override bool Equals(object obj)
-		=> Equals(obj as TowerIdentifier);
-
-	public bool Equals(TowerIdentifier other)
-		=> other != null && _id == other._id;
-
-	public override int GetHashCode()
-		=> 1969571243 + _id.GetHashCode();
-
-	public override string ToString() 
-		=> $"Tower {_id}";
-
-	public static bool operator ==(TowerIdentifier left, TowerIdentifier right)
-		=> EqualityComparer<TowerIdentifier>.Default.Equals(left, right);
-
-	public static bool operator !=(TowerIdentifier left, TowerIdentifier right)
-		=> !(left == right);
-}
-
 public abstract class TowersEvent
 {
 	public class Initialized : TowersEvent
@@ -83,5 +82,29 @@ public abstract class TowersEvent
 		}
 
 		public IEnumerable<InitialTower> Towers { get; }
+	}
+
+	public class EnemyTargetted : TowersEvent
+	{
+		public EnemyTargetted(TowerIdentifier towerId, EnemyIdentifier enemyId)
+		{
+			TowerId = towerId;
+			EnemyId = enemyId;
+		}
+
+		public TowerIdentifier TowerId { get; }
+		public EnemyIdentifier EnemyId { get; }
+	}
+
+	public class EnemyUntargetted : TowersEvent
+	{
+		public TowerIdentifier TowerId { get; }
+		public EnemyIdentifier EnemyId { get; }
+
+		public EnemyUntargetted(TowerIdentifier towerId, EnemyIdentifier enemyId)
+		{
+			TowerId = towerId;
+			EnemyId = enemyId;
+		}
 	}
 }

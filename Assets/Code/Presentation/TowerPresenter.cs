@@ -1,33 +1,51 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UniRx;
 using UnityEngine;
 using Zenject;
 
 public class TowerPresenter : MonoBehaviour
 {
-    public GameObject BulletPrefab;
+	public GameObject BulletPrefab;
 
-    public float BulletVelocity = 40f;
+	public float BulletVelocity = 40f;
 
-    [Inject]
-    public InitialTower Parameters { private get; set; }
+	[Inject]
+	public InitialTower Parameters { private get; set; }
 
-    private void Start()
-    {
-        transform.position = new Vector3(Parameters.Coordinate.X, Parameters.Coordinate.Y, 0);
-    }
+	[Inject]
+	public TowersAggregate Towers { private get; set; }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log($"Collision at {collision.transform.position} with {collision.gameObject.name}");
+	[Inject]
+	public EnemyPositions EnemyPositions { private get; set; }
 
-        var toCollision = (collision.transform.position - transform.position).normalized;
+	private void Start()
+	{
+		transform.position = new Vector3(Parameters.Coordinate.X, Parameters.Coordinate.Y, 0);
 
-        var bullet = GameObject.Instantiate(BulletPrefab);
-        bullet.transform.position = transform.position;
+		Towers.Events
+			.OfType<TowersEvent, TowersEvent.EnemyTargetted>()
+			.Where(enemyTargetted => enemyTargetted.TowerId == Parameters.TowerId)
+			.Subscribe(enemyTargetted => TargetEnemy(enemyTargetted.EnemyId));
 
-        var bulletRigidBody = bullet.GetComponent<Rigidbody2D>();
+		Towers.Events
+			.OfType<TowersEvent, TowersEvent.EnemyUntargetted>()
+			.Where(enemyUntargetted => enemyUntargetted.TowerId == Parameters.TowerId)
+			.Subscribe(enemyUntargetted => UntargetEnemy(enemyUntargetted.EnemyId));
+	}
 
-        bulletRigidBody.velocity = toCollision * BulletVelocity;
-    }
+	private void TargetEnemy(EnemyIdentifier enemyId)
+	{
+		var toCollision = (EnemyPositions[enemyId] - transform.position).normalized;
+
+		var bullet = Instantiate(BulletPrefab);
+		bullet.transform.position = transform.position;
+
+		var bulletRigidBody = bullet.GetComponent<Rigidbody2D>();
+
+		bulletRigidBody.velocity = toCollision * BulletVelocity;
+	}
+
+	private void UntargetEnemy(EnemyIdentifier enemyId)
+	{
+		
+	}
 }

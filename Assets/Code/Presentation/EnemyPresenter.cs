@@ -10,6 +10,9 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 	[Inject]
 	public EnemyParameters Parameters { private get; set; }
 
+	[Inject]
+	public EnemyPositions Positions { private get; set; }
+
 	public EnemyIdentifier Id => Parameters.EnemyId;
 
 	void Start()
@@ -20,6 +23,7 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 	void Update()
 	{
 		transform.position += Velocity * transform.up * Time.deltaTime;
+		Positions[Parameters.EnemyId] = transform.position;
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)
