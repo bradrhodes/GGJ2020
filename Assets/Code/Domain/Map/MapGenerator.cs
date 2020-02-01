@@ -2,7 +2,7 @@
 {
     public MapCell[,] GenerateMap(int width, int height)
     {
-        var map = new MapCell[width - 1, height - 1];
+        var map = new MapCell[width, height];
         for(var x = 0; x < width; x++)
             for(var y = 0; y < height; y++)
             {
@@ -19,11 +19,11 @@
         switch (randomNumber)
         {
             case 1:
-                return new MapCell(CellType.Ground);
+                return new GroundCell(MapCellStatus.Broken);
             case 2:
-                return new MapCell(CellType.Tower);
+                return new TowerCell(MapCellStatus.Broken);
             default:
-                return new MapCell(CellType.Wall);
+                return new WallCell(MapCellStatus.Broken);
         }
     }
 }

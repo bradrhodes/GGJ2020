@@ -9,7 +9,7 @@ public class MapAggregate
     private Subject<MapEvent> _events = new Subject<MapEvent>();
     private readonly MapGenerator _mapGenerator;
 
-    public IObservable<MapEvent> Event => _events;
+    public IObservable<MapEvent> Events => _events;
 
     public void Initialize(int width, int height)
     {

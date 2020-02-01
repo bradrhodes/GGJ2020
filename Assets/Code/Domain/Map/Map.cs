@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using UniRx;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 public class Map : MonoBehaviour
@@ -244,14 +246,28 @@ public class Map : MonoBehaviour
 
     [SerializeField] private GameObject brokenWall;
 
+
+    private struct TileThreshold
+    {
+        public float Threshold;
+        public GameObject Tile;
+    }
+
+    [Inject]
+    public MapAggregate MapAggregate { get; set; }
+
+    // Start is called before the first frame update
     void Start()
     {
         Random.InitState((int)System.DateTime.Now.Ticks);
+        MapAggregate.Events.OfType<MapEvent, MapEvent.Initialized>().Subscribe(HandleMapInitializedEvent);
         CreateLevel();
     }
 
     private void CreateLevel()
     {
+        // for now we're just going to ignore different tower types
+/*
         TileThreshold[] tileThresholds = new TileThreshold[]{
             new TileThreshold() { Threshold = 0.05f, Tile = brokenBasicTower},
             new TileThreshold() { Threshold = 0.10f, Tile = brokenIceTower},
@@ -260,18 +276,39 @@ public class Map : MonoBehaviour
             new TileThreshold() { Threshold = 0.85f, Tile = brokenWall},
             new TileThreshold() { Threshold = 1.00f, Tile = ground},
         };
+*/
 
+        MapAggregate.Initialize(BOARD_SIZE, BOARD_SIZE);
+    }
+
+    private void HandleMapInitializedEvent(MapEvent.Initialized initializedEvent)
+    {
         var map = GetComponent<Map>().transform;
 
-        for (var x = 0; x < BOARD_SIZE; x++)
+        for(var x = 0; x < initializedEvent.MapCells.GetLength(0); x++)
+        for (var y = 0; y < initializedEvent.MapCells.GetLength(1); y++)
         {
-            for (var y = 0; y < BOARD_SIZE; y++)
+            switch (initializedEvent.MapCells[x,y])
             {
-                GameObject tile = _pathTiles.Contains(new PathTile() {x = x, y = y}) 
-                    ? path 
-                    : GetRandomTile(tileThresholds);
 
-                Instantiate(tile, new Vector3(x, y, 0), Quaternion.identity, map);
+                    case GroundCell cell:
+                        Instantiate(ground, new Vector3(x, y, 0), Quaternion.identity, map);
+                        break;
+                    case TowerCell cell:
+                        Instantiate(brokenBasicTower, new Vector3(x, y, 0), Quaternion.identity, map);
+                        break;
+                    case WallCell cell:
+                        Instantiate(brokenWall, new Vector3(x, y, 0), Quaternion.identity, map);
+                        break;
+                    default:
+                        throw new NotImplementedException("Unknown cell type");
+
+                //GameObject tile = _pathTiles.Contains(new PathTile() {x = x, y = y}) 
+                //    ? path 
+                //    : GetRandomTile(tileThresholds);
+
+                //Instantiate(tile, new Vector3(x, y, 0), Quaternion.identity, map);
+
             }
         }
     }
