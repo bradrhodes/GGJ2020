@@ -15,6 +15,16 @@ public class TowersAggregate
 		Emit(new TowersEvent.Initialized(towers));
 	}
 
+	public void AddEnemy(TowerIdentifier towerId, EnemyIdentifier enemyId)
+	{
+
+	}
+
+	public void RemoveEnemy(TowerIdentifier towerId, EnemyIdentifier id)
+	{
+
+	}
+
 	private void Emit(TowersEvent @event)
 		=> _events.OnNext(@event);
 }
