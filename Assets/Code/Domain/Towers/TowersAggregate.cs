@@ -107,4 +107,14 @@ public abstract class TowersEvent
 			EnemyId = enemyId;
 		}
 	}
+
+	public class TowerRepaired : TowersEvent
+	{
+        public MapCoordinate MapCoordinate { get; }
+
+        public TowerRepaired(MapCoordinate mapCoordinate)
+        {
+            MapCoordinate = mapCoordinate;
+        }
+	}
 }
