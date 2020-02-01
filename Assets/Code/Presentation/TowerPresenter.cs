@@ -10,7 +10,7 @@ public class TowerPresenter : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"Collision at {collision.transform.position}");
+        Debug.Log($"Collision at {collision.transform.position} with {collision.gameObject.name}");
 
         var toCollision = (collision.transform.position - transform.position).normalized;
 
