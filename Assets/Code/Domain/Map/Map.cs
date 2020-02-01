@@ -19,7 +19,7 @@ public class Map : MonoBehaviour
 
     private void CreateLevel()
     {
-        var tileSize = ground.GetComponent<SpriteRenderer>().size.x;
+        var map = GetComponent<Map>().transform;
 
         for (var x = 0; x < BoardSize; x++)
         {
@@ -27,7 +27,7 @@ public class Map : MonoBehaviour
             {
                 var tile = GetRandomTile();
 
-                Instantiate(tile, new Vector3(x * tileSize, y * tileSize, 0), Quaternion.identity);
+                Instantiate(tile, new Vector3(x, y, 0), Quaternion.identity, map);
             }
         }
     }
