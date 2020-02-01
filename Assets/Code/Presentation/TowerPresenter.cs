@@ -8,6 +8,8 @@ public class TowerPresenter : MonoBehaviour
 
 	public float BulletVelocity = 40f;
 
+	public GameObject Turret;
+
 	[Inject]
 	public InitialTower Parameters { private get; set; }
 
@@ -34,6 +36,16 @@ public class TowerPresenter : MonoBehaviour
 
 	private void TargetEnemy(EnemyIdentifier enemyId)
 	{
+		FireBulletAt(enemyId);
+	}
+
+	private void UntargetEnemy(EnemyIdentifier enemyId)
+	{
+
+	}
+
+	private void FireBulletAt(EnemyIdentifier enemyId)
+	{
 		var toCollision = (EnemyPositions[enemyId] - transform.position).normalized;
 
 		var bullet = Instantiate(BulletPrefab);
@@ -42,10 +54,5 @@ public class TowerPresenter : MonoBehaviour
 		var bulletRigidBody = bullet.GetComponent<Rigidbody2D>();
 
 		bulletRigidBody.velocity = toCollision * BulletVelocity;
-	}
-
-	private void UntargetEnemy(EnemyIdentifier enemyId)
-	{
-		
 	}
 }

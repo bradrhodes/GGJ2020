@@ -128,6 +128,7 @@ MonoBehaviour:
   BulletPrefab: {fileID: 6056471169092515489, guid: 244346459e2d87f499874350e37a1edb,
     type: 3}
   BulletVelocity: 20
+  Turret: {fileID: 1630424310900595027}
 --- !u!1 &1630424311736155881
 GameObject:
   m_ObjectHideFlags: 0
