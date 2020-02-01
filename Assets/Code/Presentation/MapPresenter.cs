@@ -79,64 +79,7 @@ public class MapPresenter : MonoBehaviour
                         Instantiate(brokenBasicTower, new Vector3(x, y, 0), Quaternion.identity, map);
                         break;
                     case PathCell cell:
-                        GameObject pathTile = new GameObject();
-
-                        //Start of path
-                        if (x == 0 && y == 19)
-                        {
-                            pathTile = pathTopToRight;
-                        }
-                        //End of path
-                        else if (x == 0 && y == 0)
-                        {
-                            pathTile = pathRightToBottom;
-                        }
-                        //Other path tiles
-                        else
-                        {
-                            //Path to the left
-                            if (x != 0 && initializedEvent.MapCells[x - 1, y] is PathCell)
-                            {
-                                //Path above
-                                if (y != 19 && initializedEvent.MapCells[x, y + 1] is PathCell)
-                                {
-                                    pathTile = pathLeftToTop;
-                                }
-
-                                //Path to the right
-                                else if (x != 19 && initializedEvent.MapCells[x + 1, y] is PathCell)
-                                {
-                                    pathTile = pathLeftToRight;
-                                }
-
-                                //Must be path below
-                                else
-                                {
-                                    pathTile = pathLeftToBottom;
-                                }
-
-                            }
-                            //There exists a path to the top
-                            else if (y != 19 && initializedEvent.MapCells[x, y + 1] is PathCell)
-                            {
-                                //Path to the right
-                                if (x != 19 && initializedEvent.MapCells[x + 1, y] is PathCell)
-                                {
-                                    pathTile = pathTopToRight;
-                                }
-
-                                //Must be path below
-                                else
-                                {
-                                    pathTile = pathTopToBottom;
-                                }
-                            }
-                            //Must be path to the right and below
-                            else
-                            {
-                                pathTile = pathRightToBottom;
-                            }
-                        }
+                        var pathTile = ChoosePathSprite(initializedEvent, x, y);
                         Instantiate(pathTile, new Vector3(x, y, 0), Quaternion.identity, map);
                         break;
                     case WallCell cell:
@@ -145,6 +88,66 @@ public class MapPresenter : MonoBehaviour
                     default:
                         throw new NotImplementedException("Unknown cell type");
                 }
+            }
+        }
+    }
+
+    private GameObject ChoosePathSprite(MapEvent.Initialized initializedEvent, int x, int y)
+    {
+        //Start of path
+        if (x == 0 && y == 19)
+        {
+            return pathTopToRight;
+        }
+        //End of path
+        else if (x == 0 && y == 0)
+        {
+            return pathRightToBottom;
+        }
+        //Other path tiles
+        else
+        {
+            //Path to the left
+            if (x != 0 && initializedEvent.MapCells[x - 1, y] is PathCell)
+            {
+                //Path above
+                if (y != 19 && initializedEvent.MapCells[x, y + 1] is PathCell)
+                {
+                    return pathLeftToTop;
+                }
+
+                //Path to the right
+                else if (x != 19 && initializedEvent.MapCells[x + 1, y] is PathCell)
+                {
+                    return pathLeftToRight;
+                }
+
+                //Must be path below
+                else
+                {
+                    return pathLeftToBottom;
+                }
+
+            }
+            //There exists a path to the top
+            else if (y != 19 && initializedEvent.MapCells[x, y + 1] is PathCell)
+            {
+                //Path to the right
+                if (x != 19 && initializedEvent.MapCells[x + 1, y] is PathCell)
+                {
+                    return pathTopToRight;
+                }
+
+                //Must be path below
+                else
+                {
+                    return pathTopToBottom;
+                }
+            }
+            //Must be path to the right and below
+            else
+            {
+                return pathRightToBottom;
             }
         }
     }
