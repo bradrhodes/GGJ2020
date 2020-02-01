@@ -41,7 +41,8 @@ public class MapPresenter : MonoBehaviour
     {
         Random.InitState((int)System.DateTime.Now.Ticks);
         MapAggregate.Events.OfType<MapEvent, MapEvent.Initialized>().Subscribe(HandleMapInitializedEvent);
-        CreateLevel();
+
+        Observable.NextFrame().Subscribe(_ => CreateLevel());
     }
 
     private void CreateLevel()
