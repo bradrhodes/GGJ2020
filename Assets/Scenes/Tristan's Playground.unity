@@ -151,8 +151,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BoardSize: 20
   ground: {fileID: 6709320025789706529, guid: 0673c2d821bad0240af00ba490aa2d53, type: 3}
-  tower: {fileID: 8122922503653487382, guid: d83e8600fbd8aa34d90a1319603cc8d2, type: 3}
-  wall: {fileID: 2481436326581657827, guid: dbea14c3664521a43bda33e1a2fb9764, type: 3}
+  brokenBasicTower: {fileID: 5457345453516275779, guid: fc072fde8a89577458119bea80bfd3c7,
+    type: 3}
+  brokenFireTower: {fileID: 4196724710654058083, guid: 6aa3b6c9d2d2469488b5a6d09ef61dae,
+    type: 3}
+  brokenIceTower: {fileID: 8276014132533249382, guid: d0b1b6a36401d5d46a7880bfaae5d10b,
+    type: 3}
+  brokenPlasmaTower: {fileID: 870268441543041319, guid: 73f3d0f12e8152545a6e230c0ecd9899,
+    type: 3}
+  brokenWall: {fileID: 2182582343041438539, guid: c9f39d95c28d16d429078eff719860ca,
+    type: 3}
 --- !u!4 &245669271
 Transform:
   m_ObjectHideFlags: 0
@@ -244,7 +252,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 370747640}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 10, z: -40}
+  m_LocalPosition: {x: 10, y: 10, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
