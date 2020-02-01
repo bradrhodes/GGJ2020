@@ -21,12 +21,14 @@ public class TowersAggregate
 
 public class InitialTower
 {
-	public InitialTower(TowerIdentifier towerId)
+	public InitialTower(TowerIdentifier towerId, MapCoordinate coordinate)
 	{
 		TowerId = towerId;
+		Coordinate = coordinate;
 	}
 
 	public TowerIdentifier TowerId { get; }
+	public MapCoordinate Coordinate { get; }
 }
 
 public class TowerIdentifier : IEquatable<TowerIdentifier>
