@@ -21,7 +21,31 @@ public class MapAggregate
 
 public class MapCell
 {
+    public CellType CellType { get; }
+    (int xpos, int ypos) Position { get; }
+    public CellState CellState { get; }
+
+    public MapCell(CellType cellType, (int xpos, int ypos) position, CellState cellState = CellState.Broken)
+    {
+        CellType = cellType;
+        Position = position;
+        CellState = cellState;
+    }
 }
+
+public enum CellType
+{
+    Ground,
+    Tower,
+    Wall
+}
+
+public enum CellState
+{
+    Broken,
+    Repaired
+}
+
 
 public abstract class MapEvent
 {
