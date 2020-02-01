@@ -150,7 +150,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ground: {fileID: 6709320025789706529, guid: 0673c2d821bad0240af00ba490aa2d53, type: 3}
-  path: {fileID: 2602961244424943820, guid: aeecc02c321c8874093b97c87c7c7abc, type: 3}
+  pathLeftToBottom: {fileID: 463800013006201702, guid: 3a3550e431bb13c41b594a564e78349c,
+    type: 3}
+  pathLeftToRight: {fileID: 8008812249849036499, guid: 2fe2f9a792fff8d4b9da360ed61b4dad,
+    type: 3}
+  pathLeftToTop: {fileID: 140673690929471020, guid: 71cb5f38988586f408a0427d46877d46,
+    type: 3}
+  pathTopToRight: {fileID: 222784280622245179, guid: 12bae3a7523c7b24fb0d6f7d3fe3f870,
+    type: 3}
+  pathTopToBottom: {fileID: 102464610065722634, guid: 784e87a0447a6dd4aabb80f47bf9e307,
+    type: 3}
+  pathRightToBottom: {fileID: 1506943933409579212, guid: 4dfaa52bb5082bf4d92d618225411c08,
+    type: 3}
   brokenBasicTower: {fileID: 5457345453516275779, guid: fc072fde8a89577458119bea80bfd3c7,
     type: 3}
   brokenFireTower: {fileID: 4196724710654058083, guid: 6aa3b6c9d2d2469488b5a6d09ef61dae,
@@ -161,6 +172,8 @@ MonoBehaviour:
     type: 3}
   brokenWall: {fileID: 2182582343041438539, guid: c9f39d95c28d16d429078eff719860ca,
     type: 3}
+  wall: {fileID: 0}
+  castle: {fileID: 70710355855191237, guid: 9618816fd49094349a3f092feeb55acb, type: 3}
 --- !u!4 &245669271
 Transform:
   m_ObjectHideFlags: 0
@@ -269,6 +282,7 @@ GameObject:
   - component: {fileID: 1275369727}
   - component: {fileID: 1275369726}
   - component: {fileID: 1275369725}
+  - component: {fileID: 1275369728}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -322,6 +336,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1275369728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275369724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce347a0afc395204da256f8fe4ee06e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1438744711
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,5 +6,6 @@ public class WallsInstaller : MonoInstaller
     {
         Container.Bind<WallsAggregate>().AsSingle();
         Container.Bind<InitializeWallsWhenMapInitialized>().AsSingle().NonLazy();
+        Container.Bind<RepairWallsWhenMapCellClicked>().AsSingle().NonLazy();
     }
 }
