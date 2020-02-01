@@ -9,12 +9,6 @@ using Random = UnityEngine.Random;
 
 public class MapPresenter : MonoBehaviour
 {
-    private struct TileThreshold
-    {
-        public float Threshold;
-        public GameObject Tile;
-    }
-
     private readonly int BOARD_SIZE = 20;
 
     [SerializeField] private GameObject ground;
@@ -39,11 +33,15 @@ public class MapPresenter : MonoBehaviour
     [Inject]
     public MapAggregate MapAggregate { get; set; }
 
+    [Inject]
+    public WallsAggregate WallsAggregate { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {
         Random.InitState((int)System.DateTime.Now.Ticks);
         MapAggregate.Events.OfType<MapEvent, MapEvent.Initialized>().Subscribe(HandleMapInitializedEvent);
+        WallsAggregate.Events.OfType<WallsEvent, WallsEvent.WallRepaired>().Subscribe(HandleWallRepairedEvent);
 
         Observable.NextFrame().Subscribe(_ => CreateLevel());
     }
@@ -63,18 +61,6 @@ public class MapPresenter : MonoBehaviour
 
     private void CreateLevel()
     {
-        // for now we're just going to ignore different tower types
-/*
-        TileThreshold[] tileThresholds = new TileThreshold[]{
-            new TileThreshold() { Threshold = 0.05f, Tile = brokenBasicTower},
-            new TileThreshold() { Threshold = 0.10f, Tile = brokenIceTower},
-            new TileThreshold() { Threshold = 0.15f, Tile = brokenFireTower},
-            new TileThreshold() { Threshold = 0.20f, Tile = brokenPlasmaTower},
-            new TileThreshold() { Threshold = 0.85f, Tile = brokenWall},
-            new TileThreshold() { Threshold = 1.00f, Tile = ground},
-        };
-*/
-
         MapAggregate.Initialize(BOARD_SIZE, BOARD_SIZE);
     }
 
@@ -174,11 +160,8 @@ public class MapPresenter : MonoBehaviour
         }
     }
 
-
-    //private GameObject GetRandomTile(IEnumerable<TileThreshold> tileThresholds)
-    //{
-    //    var randomNumber = Random.value;
-
-    //    return tileThresholds.First(tileThreshold => randomNumber <= tileThreshold.Threshold).Tile;
-    //}
+    private void HandleWallRepairedEvent(WallsEvent.WallRepaired repairedEvent)
+    {
+        Debug.Log(repairedEvent);
+    }
 }
