@@ -17,8 +17,6 @@ public class BulletPresenter : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("I got hit!");
-
         GameObject.Destroy(gameObject);
     }
 }

@@ -11,6 +11,9 @@ public class TowersPresenter : MonoBehaviour
 	[Inject]
 	public TowersAggregate Towers { private get; set; }
 
+	[Inject]
+	public IFactory<InitialTower, TowerInstaller> TowerFactory { private get; set; }
+
 	private void Start()
 	{
 		Towers.Events
@@ -22,10 +25,7 @@ public class TowersPresenter : MonoBehaviour
 	{
 		foreach (var tower in towers)
 		{
-			var towerGameObject = Instantiate(TowerPrefab);
-
-			towerGameObject.transform.position = new Vector3(tower.Coordinate.X, tower.Coordinate.Y, 0);
-			towerGameObject.transform.parent = transform;
+			TowerFactory.Create(tower);
 		}
 	}
 }

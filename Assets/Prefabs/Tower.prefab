@@ -89,6 +89,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1630424311239262504}
+  - component: {fileID: 4378063992022899971}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -112,6 +113,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4378063992022899971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630424311239262505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b88b27045d110d449802691c4223226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletPrefab: {fileID: 6056471169092515489, guid: 244346459e2d87f499874350e37a1edb,
+    type: 3}
+  BulletVelocity: 20
 --- !u!1 &1630424311736155881
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +139,7 @@ GameObject:
   - component: {fileID: 1630424311736155883}
   - component: {fileID: 1630424311736155880}
   - component: {fileID: 1630424311736155882}
-  - component: {fileID: 8477876143466968934}
+  - component: {fileID: 5765687412612551225}
   m_Layer: 8
   m_Name: Detector
   m_TagString: Untagged
@@ -210,7 +226,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.95
---- !u!114 &8477876143466968934
+--- !u!114 &5765687412612551225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,9 +235,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1630424311736155881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b88b27045d110d449802691c4223226, type: 3}
+  m_Script: {fileID: 11500000, guid: 39c19a5d681700747b1fa705d09fc5a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletPrefab: {fileID: 6056471169092515489, guid: 244346459e2d87f499874350e37a1edb,
-    type: 3}
-  BulletVelocity: 50

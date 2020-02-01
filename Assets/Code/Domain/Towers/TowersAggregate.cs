@@ -53,6 +53,9 @@ public class TowerIdentifier : IEquatable<TowerIdentifier>
 	public override int GetHashCode()
 		=> 1969571243 + _id.GetHashCode();
 
+	public override string ToString() 
+		=> $"Tower {_id}";
+
 	public static bool operator ==(TowerIdentifier left, TowerIdentifier right)
 		=> EqualityComparer<TowerIdentifier>.Default.Equals(left, right);
 
