@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186008f7137d8384184af67336d8bf47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoardSize: 20
   ground: {fileID: 6709320025789706529, guid: 0673c2d821bad0240af00ba490aa2d53, type: 3}
+  path: {fileID: 2602961244424943820, guid: aeecc02c321c8874093b97c87c7c7abc, type: 3}
   brokenBasicTower: {fileID: 5457345453516275779, guid: fc072fde8a89577458119bea80bfd3c7,
     type: 3}
   brokenFireTower: {fileID: 4196724710654058083, guid: 6aa3b6c9d2d2469488b5a6d09ef61dae,
