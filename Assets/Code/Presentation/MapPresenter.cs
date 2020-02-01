@@ -32,6 +32,7 @@ public class MapPresenter : MonoBehaviour
     [SerializeField] private GameObject brokenPlasmaTower;
 
     [SerializeField] private GameObject brokenWall;
+    [SerializeField] private GameObject wall;
 
     [SerializeField] private GameObject castle;
 
