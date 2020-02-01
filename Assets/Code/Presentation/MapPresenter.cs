@@ -8,7 +8,7 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class Map : MonoBehaviour
+public class MapPresenter : MonoBehaviour
 {
     private struct TileThreshold
     {
@@ -276,7 +276,7 @@ public class Map : MonoBehaviour
 
     private void HandleMapInitializedEvent(MapEvent.Initialized initializedEvent)
     {
-        var map = GetComponent<Map>().transform;
+        var map = GetComponent<MapPresenter>().transform;
 
         for(var x = 0; x < initializedEvent.MapCells.GetLength(0); x++)
         for (var y = 0; y < initializedEvent.MapCells.GetLength(1); y++)
