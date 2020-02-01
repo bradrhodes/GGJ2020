@@ -2,8 +2,11 @@
 {
     public class Initialized : MapEvent
     {
+        public MapCell[,] MapCells { get; }
+
         public Initialized(MapCell[,] mapCells)
         {
+            MapCells = mapCells;
         }
     }
 
