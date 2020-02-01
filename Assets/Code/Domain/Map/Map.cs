@@ -246,13 +246,6 @@ public class Map : MonoBehaviour
 
     [SerializeField] private GameObject brokenWall;
 
-
-    private struct TileThreshold
-    {
-        public float Threshold;
-        public GameObject Tile;
-    }
-
     [Inject]
     public MapAggregate MapAggregate { get; set; }
 
