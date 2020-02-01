@@ -15,6 +15,13 @@ public class GroundCell : MapCell
     }
 }
 
+public class PathCell : MapCell
+{
+    public PathCell(MapCellStatus status) : base(status)
+    {
+    }
+}
+
 public class TowerCell : MapCell
 {
     public TowerCell(MapCellStatus status) : base(status)
