@@ -17,4 +17,11 @@ public class EnemyPresenter : MonoBehaviour
     {
         transform.position += Velocity * transform.up * Time.deltaTime;
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("I got hit!");
+
+        GameObject.Destroy(gameObject);
+    }
 }
