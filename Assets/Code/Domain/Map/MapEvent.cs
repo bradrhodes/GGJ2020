@@ -16,4 +16,14 @@
         {
         }
     }
+
+    public class MapCellClicked : MapEvent
+    {
+        public MapCoordinate Coordinate { get; }
+
+        public MapCellClicked(MapCoordinate coordinate)
+        {
+            Coordinate = coordinate;
+        }
+    }
 }

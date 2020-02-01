@@ -24,4 +24,9 @@ public class MapAggregate
     {
         this._mapGenerator = mapGenerator;
     }
+
+    public void ClickMapCell(int xCoordinate, int yCoordinate)
+    {
+        Emit(new MapEvent.MapCellClicked(new MapCoordinate(xCoordinate, yCoordinate)));
+    }
 }
