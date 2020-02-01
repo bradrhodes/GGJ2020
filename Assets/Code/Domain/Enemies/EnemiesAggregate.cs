@@ -14,6 +14,7 @@ public class EnemiesAggregate
 
         _timeEvents
             .Sample(_parameters.SpawnRate)
+            .Take(_parameters.EnemyCount)
             .Subscribe(_ => Emit(new EnemiesEvent.EnemySpawned()));
     }
 
