@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -18,8 +19,12 @@ public class MapPresenter : MonoBehaviour
 
     [SerializeField] private GameObject ground;
 
-    [SerializeField] private GameObject path;
+    [SerializeField] private GameObject pathLeftToBottom;
     [SerializeField] private GameObject pathLeftToRight;
+    [SerializeField] private GameObject pathLeftToTop;
+    [SerializeField] private GameObject pathTopToRight;
+    [SerializeField] private GameObject pathTopToBottom;
+    [SerializeField] private GameObject pathRightToBottom;
 
     [SerializeField] private GameObject brokenBasicTower;
     [SerializeField] private GameObject brokenFireTower;
@@ -64,7 +69,7 @@ public class MapPresenter : MonoBehaviour
         {
             for (var y = 0; y < initializedEvent.MapCells.GetLength(1); y++)
             {
-                switch (initializedEvent.MapCells[x,y])
+                switch (initializedEvent.MapCells[x, y])
                 {
                     case GroundCell cell:
                         Instantiate(ground, new Vector3(x, y, 0), Quaternion.identity, map);
@@ -73,7 +78,65 @@ public class MapPresenter : MonoBehaviour
                         Instantiate(brokenBasicTower, new Vector3(x, y, 0), Quaternion.identity, map);
                         break;
                     case PathCell cell:
-                        Instantiate(path, new Vector3(x, y, 0), Quaternion.identity, map);
+                        GameObject pathTile = new GameObject();
+
+                        //Start of path
+                        if (x == 0 && y == 19)
+                        {
+                            pathTile = pathTopToRight;
+                        }
+                        //End of path
+                        else if (x == 0 && y == 0)
+                        {
+                            pathTile = pathRightToBottom;
+                        }
+                        //Other path tiles
+                        else
+                        {
+                            //Path to the left
+                            if (x != 0 && initializedEvent.MapCells[x - 1, y] is PathCell)
+                            {
+                                //Path above
+                                if (y != 19 && initializedEvent.MapCells[x, y + 1] is PathCell)
+                                {
+                                    pathTile = pathLeftToTop;
+                                }
+
+                                //Path to the right
+                                else if (x != 19 && initializedEvent.MapCells[x + 1, y] is PathCell)
+                                {
+                                    pathTile = pathLeftToRight;
+                                }
+
+                                //Must be path below
+                                else
+                                {
+                                    pathTile = pathLeftToBottom;
+                                }
+
+                            }
+                            //There exists a path to the top
+                            else if (y != 19 && initializedEvent.MapCells[x, y + 1] is PathCell)
+                            {
+                                //Path to the right
+                                if (x != 19 && initializedEvent.MapCells[x + 1, y] is PathCell)
+                                {
+                                    pathTile = pathTopToRight;
+                                }
+
+                                //Must be path below
+                                else
+                                {
+                                    pathTile = pathTopToBottom;
+                                }
+                            }
+                            //Must be path to the right and below
+                            else
+                            {
+                                pathTile = pathRightToBottom;
+                            }
+                        }
+                        Instantiate(pathTile, new Vector3(x, y, 0), Quaternion.identity, map);
                         break;
                     case WallCell cell:
                         Instantiate(brokenWall, new Vector3(x, y, 0), Quaternion.identity, map);

@@ -150,8 +150,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ground: {fileID: 6709320025789706529, guid: 0673c2d821bad0240af00ba490aa2d53, type: 3}
-  path: {fileID: 2602961244424943820, guid: aeecc02c321c8874093b97c87c7c7abc, type: 3}
-  brokenBasicTower: {fileID: 5457345453516275779, guid: fc072fde8a89577458119bea80bfd3c7,
+  pathLeftToBottom: {fileID: 463800013006201702, guid: 3a3550e431bb13c41b594a564e78349c,
+    type: 3}
+  pathLeftToRight: {fileID: 8008812249849036499, guid: 2fe2f9a792fff8d4b9da360ed61b4dad,
+    type: 3}
+  pathLeftToTop: {fileID: 140673690929471020, guid: 71cb5f38988586f408a0427d46877d46,
+    type: 3}
+  pathTopToRight: {fileID: 222784280622245179, guid: 12bae3a7523c7b24fb0d6f7d3fe3f870,
+    type: 3}
+  pathTopToBottom: {fileID: 102464610065722634, guid: 784e87a0447a6dd4aabb80f47bf9e307,
+    type: 3}
+  pathRightToBottom: {fileID: 1506943933409579212, guid: 4dfaa52bb5082bf4d92d618225411c08,
+    type: 3}
+  brokenBasicTower: {fileID: 870268441543041319, guid: 73f3d0f12e8152545a6e230c0ecd9899,
     type: 3}
   brokenFireTower: {fileID: 4196724710654058083, guid: 6aa3b6c9d2d2469488b5a6d09ef61dae,
     type: 3}
