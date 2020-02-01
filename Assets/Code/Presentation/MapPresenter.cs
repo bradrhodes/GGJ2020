@@ -161,10 +161,10 @@ public class MapPresenter : MonoBehaviour
     }
 
 
-    private GameObject GetRandomTile(IEnumerable<TileThreshold> tileThresholds)
-    {
-        var randomNumber = Random.value;
+    //private GameObject GetRandomTile(IEnumerable<TileThreshold> tileThresholds)
+    //{
+    //    var randomNumber = Random.value;
 
-        return tileThresholds.First(tileThreshold => randomNumber <= tileThreshold.Threshold).Tile;
-    }
+    //    return tileThresholds.First(tileThreshold => randomNumber <= tileThreshold.Threshold).Tile;
+    //}
 }
