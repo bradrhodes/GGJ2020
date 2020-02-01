@@ -210,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 627143462}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1234611037}
   m_RootOrder: 1
@@ -364,6 +364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1234611037}
+  - component: {fileID: 1234611038}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -387,6 +388,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1234611038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234611036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b88b27045d110d449802691c4223226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletPrefab: {fileID: 6056471169092515489, guid: 244346459e2d87f499874350e37a1edb,
+    type: 3}
+  BulletVelocity: 50
 --- !u!1 &1492307589
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,7 +542,6 @@ GameObject:
   - component: {fileID: 1999951006}
   - component: {fileID: 1999951005}
   - component: {fileID: 1999951007}
-  - component: {fileID: 1999951008}
   m_Layer: 8
   m_Name: Detector
   m_TagString: Untagged
@@ -613,18 +628,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.95
---- !u!114 &1999951008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999951004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b88b27045d110d449802691c4223226, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BulletPrefab: {fileID: 6056471169092515489, guid: 244346459e2d87f499874350e37a1edb,
-    type: 3}
-  BulletVelocity: 50
