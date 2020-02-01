@@ -30,6 +30,8 @@ public class MapPresenter : MonoBehaviour
 
     [SerializeField] private GameObject castle;
 
+    private GameObject[,] _tiles;
+
     [Inject]
     public MapAggregate MapAggregate { get; set; }
 
@@ -66,7 +68,7 @@ public class MapPresenter : MonoBehaviour
 
     private void HandleMapInitializedEvent(MapEvent.Initialized initializedEvent)
     {
-        var map = GetComponent<MapPresenter>().transform;
+        _tiles = new GameObject[initializedEvent.MapCells.GetLength(0), initializedEvent.MapCells.GetLength(1)];
 
         for (var x = 0; x < initializedEvent.MapCells.GetLength(0); x++)
         {
@@ -75,23 +77,23 @@ public class MapPresenter : MonoBehaviour
                 switch (initializedEvent.MapCells[x, y])
                 {
                     case GroundCell cell:
-                        Instantiate(ground, new Vector3(x, y, 0), Quaternion.identity, map);
+                        _tiles[x, y] = Instantiate(ground, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     case TowerCell cell:
-                        Instantiate(brokenBasicTower, new Vector3(x, y, 0), Quaternion.identity, map);
+                        _tiles[x, y] = Instantiate(brokenBasicTower, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     case PathCell cell:
                         var pathTile = ChoosePathSprite(initializedEvent, x, y);
-                        Instantiate(pathTile, new Vector3(x, y, 0), Quaternion.identity, map);
+                        _tiles[x, y] = Instantiate(pathTile, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     case WallCell cell:
-                        Instantiate(brokenWall, new Vector3(x, y, 0), Quaternion.identity, map);
+                        _tiles[x, y] = Instantiate(brokenWall, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     case StartCell cell:
-                        Instantiate(pathTopToRight, new Vector3(x, y, 0), Quaternion.identity, map);
+                        _tiles[x, y] = Instantiate(pathTopToRight, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     case GoalCell cell:
-                        Instantiate(castle, new Vector3(x, y, 0), Quaternion.identity, map);
+                        _tiles[x, y] = Instantiate(castle, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     default:
                         throw new NotImplementedException("Unknown cell type");
@@ -162,6 +164,10 @@ public class MapPresenter : MonoBehaviour
 
     private void HandleWallRepairedEvent(WallsEvent.WallRepaired repairedEvent)
     {
-        Debug.Log(repairedEvent);
+        var x = repairedEvent.Coordinate.X;
+        var y = repairedEvent.Coordinate.Y;
+
+        Destroy(_tiles[x, y]);
+        _tiles[x, y] = Instantiate(wall, new Vector3(x, y, 0), Quaternion.identity, transform);
     }
 }

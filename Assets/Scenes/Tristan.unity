@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 484455162}
   - component: {fileID: 484455163}
   - component: {fileID: 484455164}
+  - component: {fileID: 484455165}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -171,6 +172,7 @@ MonoBehaviour:
   - {fileID: 484455162}
   - {fileID: 484455163}
   - {fileID: 484455164}
+  - {fileID: 484455165}
   _installerPrefabs: []
   _autoRun: 1
   _parentNewObjectsUnderSceneContext: 0
@@ -214,6 +216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2c2d7398b721c4d822b7497771b0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TowerPrefab: {fileID: 0}
+  TowersParent: {fileID: 0}
 --- !u!114 &484455164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,6 +230,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce347a0afc395204da256f8fe4ee06e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &484455165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484455158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c03a284bbbc3a1245a67f5d65bba3437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyPrefab: {fileID: 0}
+  EnemiesParent: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
