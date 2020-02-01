@@ -42,16 +42,13 @@ public class MapGenerator
 
     private MapCell GenerateRandomCell()
     {
-        var randomNumber = (int)(UnityEngine.Random.value * 3);
+        var randomNumber = UnityEngine.Random.value;
 
-        switch (randomNumber)
-        {
-            case 1:
-                return new GroundCell();
-            case 2:
-                return new TowerCell();
-            default:
-                return new WallCell();
-        }
+        if (randomNumber <= 0.20)
+            return new TowerCell();
+        if (randomNumber <= 0.85)
+            return new WallCell();
+        
+        return new GroundCell();
     }
 }
