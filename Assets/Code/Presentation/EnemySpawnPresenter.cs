@@ -19,6 +19,7 @@ public class EnemySpawnPresenter : MonoBehaviour
 
 	private void SpawnEnemy()
 	{
-		Instantiate(EnemyPrefab);
+		var enemy = Instantiate(EnemyPrefab);
+		enemy.transform.position = transform.position;
 	}
 }
