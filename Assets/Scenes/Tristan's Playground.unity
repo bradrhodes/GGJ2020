@@ -162,7 +162,7 @@ MonoBehaviour:
     type: 3}
   pathRightToBottom: {fileID: 1506943933409579212, guid: 4dfaa52bb5082bf4d92d618225411c08,
     type: 3}
-  brokenBasicTower: {fileID: 870268441543041319, guid: 73f3d0f12e8152545a6e230c0ecd9899,
+  brokenBasicTower: {fileID: 5457345453516275779, guid: fc072fde8a89577458119bea80bfd3c7,
     type: 3}
   brokenFireTower: {fileID: 4196724710654058083, guid: 6aa3b6c9d2d2469488b5a6d09ef61dae,
     type: 3}
