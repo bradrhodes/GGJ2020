@@ -33,6 +33,8 @@ public class MapPresenter : MonoBehaviour
 
     [SerializeField] private GameObject brokenWall;
 
+    [SerializeField] private GameObject castle;
+
     [Inject]
     public MapAggregate MapAggregate { get; set; }
 
@@ -86,10 +88,10 @@ public class MapPresenter : MonoBehaviour
                         Instantiate(brokenWall, new Vector3(x, y, 0), Quaternion.identity, map);
                         break;
                     case StartCell cell:
-                        Instantiate(path, new Vector3(x, y, 0), Quaternion.identity, map);
+                        Instantiate(pathTopToRight, new Vector3(x, y, 0), Quaternion.identity, map);
                         break;
                     case GoalCell cell:
-                        Instantiate(path, new Vector3(x, y, 0), Quaternion.identity, map);
+                        Instantiate(castle, new Vector3(x, y, 0), Quaternion.identity, map);
                         break;
                     default:
                         throw new NotImplementedException("Unknown cell type");
@@ -101,14 +103,14 @@ public class MapPresenter : MonoBehaviour
     private GameObject ChoosePathSprite(MapEvent.Initialized initializedEvent, int x, int y)
     {
         //Start of path
-        if (x == 0 && y == 19)
+        if (x == 1 && y == 19)
         {
-            return pathTopToRight;
+            return pathLeftToBottom;
         }
         //End of path
-        else if (x == 0 && y == 0)
+        else if (x == 1 && y == 0)
         {
-            return pathRightToBottom;
+            return pathLeftToRight;
         }
         //Other path tiles
         else

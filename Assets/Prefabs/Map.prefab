@@ -66,3 +66,4 @@ MonoBehaviour:
     type: 3}
   brokenWall: {fileID: 2182582343041438539, guid: c9f39d95c28d16d429078eff719860ca,
     type: 3}
+  castle: {fileID: 70710355855191237, guid: 9618816fd49094349a3f092feeb55acb, type: 3}
