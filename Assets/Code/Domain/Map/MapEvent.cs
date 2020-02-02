@@ -3,10 +3,14 @@
     public class Initialized : MapEvent
     {
         public MapCell[,] MapCells { get; }
+        public MapCoordinate StartCell { get; }
+        public MapCoordinate GoalCell { get; }
 
-        public Initialized(MapCell[,] mapCells)
+        public Initialized(MapCell[,] mapCells, MapCoordinate startCell, MapCoordinate goalCell)
         {
             MapCells = mapCells;
+            StartCell = startCell;
+            GoalCell = goalCell;
         }
     }
 

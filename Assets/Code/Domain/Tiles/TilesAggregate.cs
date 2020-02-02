@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using JetBrains.Annotations;
 using UniRx;
 using RoyT.AStar;
 
@@ -9,31 +12,56 @@ public interface IGetEnemyPositions
 
 public class TilesAggregate
 {
+    private readonly IGetEnemyPositions _enemyPositionService;
     public Subject<TileEvent> _events = new Subject<TileEvent>();
     private RoyT.AStar.Grid _grid = new Grid(0, 0);
+    private HashSet<EnemyIdentifier> _enemies = new HashSet<EnemyIdentifier>();
+    private MapCoordinate _goalCell = new MapCoordinate(0,0);
 
-    public void Initialize(int xDimension, int yDimension)
+    public TilesAggregate([NotNull] IGetEnemyPositions enemyPositionService)
+    {
+        _enemyPositionService = enemyPositionService ?? throw new ArgumentNullException(nameof(enemyPositionService));
+    }
+    public void Initialize(int xDimension, int yDimension, MapCoordinate goalCell)
     {
         _grid = new Grid(xDimension, yDimension);
+        _goalCell = goalCell;
     }
 
     public void SetTileAsOccupied(MapCoordinate coordinate)
     {
         _grid.BlockCell(coordinate.ToPosition());
-        Emit(new TileEvent.TileOccupied(coordinate));
+
+        var events = _enemies.Select(identifier =>
+        {
+            var position = _enemyPositionService[identifier];
+            var xCoordinate = (int) Math.Round(position.x);
+            var yCoordinate = (int) Math.Round(position.y);
+
+            return new TileEvent.PathCalculated(identifier, FindPath(new MapCoordinate(xCoordinate, yCoordinate)));
+        });
+
+        foreach (var pathCalulated in events)
+        {
+            Emit(pathCalulated);
+        }
     }
 
-    public void FindPath(MapCoordinate currentLocation, MapCoordinate goalLocation)
+    private MapCoordinate[] FindPath(MapCoordinate currentLocation)
     {
-        var path = _grid.GetPath(currentLocation.ToPosition(), goalLocation.ToPosition(), MovementPatterns.LateralOnly)
+         return _grid.GetPath(currentLocation.ToPosition(), _goalCell.ToPosition(), MovementPatterns.LateralOnly)
             .Select(position => position.ToMapCoordinate()).ToArray();
+    }
 
-        Emit(new TileEvent.PathCalculated(path));
+    public void AddEnemy(EnemyIdentifier enemyId)
+    {
+        _enemies.Add(enemyId);
     }
 
     private void Emit(TileEvent @event)
 		=> _events.OnNext(@event);
 }
+
 
 
 public abstract class TileEvent
@@ -60,11 +88,13 @@ public abstract class TileEvent
 
     public class PathCalculated : TileEvent
     {
-        private readonly MapCoordinate[] _path;
+        public EnemyIdentifier EnemyId { get; }
+        public MapCoordinate[] Path { get; }
 
-        public PathCalculated(MapCoordinate[] path)
+        public PathCalculated(EnemyIdentifier enemyId, MapCoordinate[] path)
         {
-            _path = path;
+            EnemyId = enemyId;
+            Path = path;
         }
     }
 
