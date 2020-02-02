@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -9,6 +7,9 @@ public class GoalCellPresenter : MonoBehaviour
 {
 	[Inject]
 	public MapAggregate Map { private get; set; }
+
+	[Inject]
+	public GameStatusAggregate GameStatus { private get; set; }
 
 	private void Start()
 	{
@@ -42,6 +43,6 @@ public class GoalCellPresenter : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		Debug.Log($"Goal cell triggered by {collision.gameObject.name}");
+		GameStatus.Lose();
 	}
 }
