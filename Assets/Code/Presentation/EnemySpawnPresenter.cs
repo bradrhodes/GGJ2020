@@ -17,7 +17,8 @@ public class EnemySpawnPresenter : MonoBehaviour
 	{
 		Enemies.Events
 			.OfType<EnemiesEvent, EnemiesEvent.EnemySpawned>()
-			.Subscribe(enemySpawned => SpawnEnemy(enemySpawned.EnemyId));
+			.Subscribe(enemySpawned => SpawnEnemy(enemySpawned.EnemyId))
+			.AddTo(this);
 	}
 
 	private void SpawnEnemy(EnemyIdentifier enemyId)

@@ -232,7 +232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9147daf6cc93254a9d9f371544524a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameWonCanvas: {fileID: 24595103}
 --- !u!1 &191205437
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,6 +361,7 @@ GameObject:
   - component: {fileID: 484455164}
   - component: {fileID: 484455165}
   - component: {fileID: 484455166}
+  - component: {fileID: 484455167}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -400,6 +400,7 @@ MonoBehaviour:
   - {fileID: 484455163}
   - {fileID: 484455164}
   - {fileID: 484455165}
+  - {fileID: 484455167}
   _installerPrefabs: []
   _autoRun: 1
   _parentNewObjectsUnderSceneContext: 0
@@ -494,6 +495,18 @@ MonoBehaviour:
     type: 3}
   PlasmaTowerPrefab: {fileID: 1630424311239262505, guid: e119b9b875f93a34abd7f3ec53c6cf36,
     type: 3}
+--- !u!114 &484455167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484455158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da9bc48e1523b244a2ddd51d86f37b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &632434510
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,7 +1147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786652397}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalPosition: {x: 0, y: 19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
