@@ -42,7 +42,7 @@ public class EnemiesAggregate
 	{
 		_enemiesDestroyed++;
 
-		Emit(new EnemiesEvent.EnemyDestroyed(enemyId));
+		Emit(new EnemiesEvent.EnemyDestroyed(enemyId, _enemiesDestroyed));
 	}
 
 	private void Emit(EnemiesEvent @event)
@@ -81,11 +81,13 @@ public abstract class EnemiesEvent
 
 	public class EnemyDestroyed : EnemiesEvent
 	{
-		public EnemyDestroyed(EnemyIdentifier enemyId)
+		public EnemyDestroyed(EnemyIdentifier enemyId, int totalDestroyed)
 		{
 			EnemyId = enemyId;
+			TotalDestroyed = totalDestroyed;
 		}
 
 		public EnemyIdentifier EnemyId { get; }
+		public int TotalDestroyed { get; }
 	}
 }
