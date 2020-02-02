@@ -1,5 +1,6 @@
 ﻿using System;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using Zenject;
 
@@ -43,6 +44,7 @@ public class GoalCellPresenter : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+		Destroy(collision.gameObject);
 		GameStatus.LoseLife();
 	}
 }
