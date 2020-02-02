@@ -71,8 +71,14 @@ public class TowerPresenter : MonoBehaviour
 	}
 
 	private void FireBulletAt(EnemyIdentifier enemyId)
-	{
-		var toCollision = (EnemyPositions[enemyId] - transform.position).normalized;
+    {
+        var toCollision = (EnemyPositions[enemyId] - transform.position).normalized;
+
+		//Rotations are counter clockwise?
+        turretSprite.transform.rotation = Quaternion.LookRotation(Vector3.forward, toCollision);
+
+
+		//turretSprite.transform.rotation = Quaternion.Euler(0, 0, angle);
 
 		var bullet = Instantiate(BulletPrefab);
 		bullet.transform.position = transform.position;
