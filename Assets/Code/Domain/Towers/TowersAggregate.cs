@@ -18,8 +18,8 @@ public class TowersAggregate
 
 	public void Initialize(params InitialTower[] towers)
     {
-        _towers = towers.ToDictionary(_ => TowerIdentifier.Create(),
-            tower => new Tower(TowerIdentifier.Create(), tower.Coordinate, TowerState.Broken));
+        _towers = towers.ToDictionary(tower => tower.TowerId,
+            tower => new Tower(tower.TowerId, tower.Coordinate, TowerState.Broken));
 		Emit(new TowersEvent.Initialized(towers));
 	}
 
@@ -65,6 +65,11 @@ public class TowersAggregate
 
         var clickedTower = _towers.First(pair => pair.Key == identifier).Value;
 
+        if (clickedTower.State == TowerState.Repaired)
+            return;
+
+		_towers[identifier] = new Tower(identifier, clickedTower.Coordinate, TowerState.Repaired);
+
 		Emit(new TowersEvent.TowerRepaired(clickedTower.Coordinate, clickedTower.Identifier));
     }
 
@@ -75,7 +80,7 @@ public class TowersAggregate
         if (tower == default(Tower))
             return;
 
-		Emit(new TowersEvent.TowerRepaired(tower.Coordinate, tower.Identifier));
+		Repair(tower.Identifier);
     }
 
 	private void Emit(TowersEvent @event)

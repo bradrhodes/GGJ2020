@@ -28,6 +28,11 @@ public class WallsAggregate
 
         var clickedWall = _walls.First(pair => pair.Key == clickedCoordinate).Value;
 
+        if (clickedWall.State == WallState.Repaired)
+            return;
+
+        _walls[clickedWall.Coordinate] = new Wall(clickedWall.Coordinate, WallState.Repaired);
+
 		Emit(new WallsEvent.WallRepaired(clickedWall.Coordinate));
     }
 }
