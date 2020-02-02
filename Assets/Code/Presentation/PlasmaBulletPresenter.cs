@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlasmaBulletPresenter : MonoBehaviour
 {
-    private void Update()
+    private void Start()
     {
         Destroy(gameObject, 3f);
     }

@@ -2,8 +2,13 @@
 
 public class BulletPresenter : MonoBehaviour
 {
+    private void Start()
+    {
+        Destroy(gameObject, 3f);
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
-        GameObject.Destroy(gameObject);
+        Destroy(gameObject);
     }
 }
