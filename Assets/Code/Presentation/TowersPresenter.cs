@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -17,15 +15,12 @@ public class TowersPresenter : MonoBehaviour
 	private void Start()
 	{
 		Towers.Events
-			.OfType<TowersEvent, TowersEvent.Initialized>()
-			.Subscribe(initialized => PlaceTowers(initialized.Towers));
+			.OfType<TowersEvent, TowersEvent.TowerRepaired>()
+			.Subscribe(repaired => PlaceTower(repaired.MapCoordinate, repaired.Identifier));
 	}
 
-	private void PlaceTowers(IEnumerable<InitialTower> towers)
+	private void PlaceTower(MapCoordinate coordinate, TowerIdentifier towerId)
 	{
-		foreach (var tower in towers)
-		{
-			TowerFactory.Create(tower);
-		}
+		TowerFactory.Create(new InitialTower(towerId, coordinate));
 	}
 }
