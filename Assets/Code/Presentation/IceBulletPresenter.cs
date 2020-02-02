@@ -10,6 +10,7 @@ public class IceBulletPresenter : MonoBehaviour
     void Start()
     {
         originPos = transform.position;
+        Destroy(gameObject, 3f);
     }
 
     public void Update()
@@ -25,7 +26,6 @@ public class IceBulletPresenter : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("IIIIce");
         var icecircle = GameObject.Instantiate(iceCirclePrefab);
         icecircle.transform.position = transform.position;
         GameObject.Destroy(gameObject);
