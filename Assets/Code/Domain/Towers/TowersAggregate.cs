@@ -8,6 +8,7 @@ using UnityEngine;
 public class TowersAggregate
 {
 	private Subject<TowersEvent> _events = new Subject<TowersEvent>();
+    private IDictionary<TowerIdentifier, Tower> _towers = new Dictionary<TowerIdentifier, Tower>();
 
 	public IObservable<TowersEvent> Events => _events;
 
@@ -16,7 +17,9 @@ public class TowersAggregate
 	private Dictionary<TowerIdentifier, EnemyIdentifier> _targettedEnemies = new Dictionary<TowerIdentifier, EnemyIdentifier>();
 
 	public void Initialize(params InitialTower[] towers)
-	{
+    {
+        _towers = towers.ToDictionary(_ => TowerIdentifier.Create(),
+            tower => new Tower(TowerIdentifier.Create(), tower.Coordinate, TowerState.Broken));
 		Emit(new TowersEvent.Initialized(towers));
 	}
 
@@ -55,9 +58,48 @@ public class TowersAggregate
 			}
 		}
 	}
+    public void Repair(TowerIdentifier identifier)
+    {
+        if (!_towers.ContainsKey(identifier))
+            return;
+
+        var clickedTower = _towers.First(pair => pair.Key == identifier).Value;
+
+		Emit(new TowersEvent.TowerRepaired(clickedTower.Coordinate, clickedTower.Identifier));
+    }
+
+	public void Repair(MapCoordinate coordinate)
+    {
+        var tower = _towers.FirstOrDefault(pair => pair.Value.Coordinate == coordinate).Value;
+
+        if (tower == default(Tower))
+            return;
+
+		Emit(new TowersEvent.TowerRepaired(tower.Coordinate, tower.Identifier));
+    }
 
 	private void Emit(TowersEvent @event)
 		=> _events.OnNext(@event);
+}
+
+public class Tower
+{
+    public TowerIdentifier Identifier { get; }
+    public MapCoordinate Coordinate { get; }
+    public TowerState State { get; }
+
+    public Tower(TowerIdentifier identifier, MapCoordinate coordinate, TowerState state)
+    {
+        Identifier = identifier;
+        Coordinate = coordinate;
+        State = state;
+    }
+}
+
+public enum TowerState
+{
+	Broken,
+	Repaired
 }
 
 public class InitialTower

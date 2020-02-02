@@ -10,6 +10,7 @@ public class TowersInstaller : MonoInstaller
 	{
 		Container.Bind<TowersAggregate>().AsSingle();
 		Container.Bind<InitializeTowersWhenMapInitialized>().AsSingle().NonLazy();
+        Container.Bind<RepairTowersWhenMapCellClicked>().AsSingle().NonLazy();
 
 		Container.BindIFactory<InitialTower, TowerInstaller>()
 			.FromSubContainerResolve()
