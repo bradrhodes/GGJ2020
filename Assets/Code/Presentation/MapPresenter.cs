@@ -20,10 +20,17 @@ public class MapPresenter : MonoBehaviour
     [SerializeField] private GameObject pathTopToBottom;
     [SerializeField] private GameObject pathRightToBottom;
 
-    [SerializeField] private GameObject brokenBasicTower;
-    [SerializeField] private GameObject brokenFireTower;
-    [SerializeField] private GameObject brokenIceTower;
-    [SerializeField] private GameObject brokenPlasmaTower;
+    [SerializeField] private GameObject basicTowerBroken;
+    [SerializeField] private GameObject basicTowerBase;
+
+    [SerializeField] private GameObject fireTowerBroken;
+    [SerializeField] private GameObject fireTowerBase;
+
+    [SerializeField] private GameObject iceTowerBroken;
+    [SerializeField] private GameObject iceTowerBase;
+
+    [SerializeField] private GameObject plasmaTowerBroken;
+    [SerializeField] private GameObject plasmaTowerBase;
 
     [SerializeField] private GameObject brokenWall;
     [SerializeField] private GameObject wall;
@@ -38,12 +45,16 @@ public class MapPresenter : MonoBehaviour
     [Inject]
     public WallsAggregate WallsAggregate { get; set; }
 
+    [Inject]
+    public TowersAggregate TowersAggregate { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {
         Random.InitState((int)System.DateTime.Now.Ticks);
         MapAggregate.Events.OfType<MapEvent, MapEvent.Initialized>().Subscribe(HandleMapInitializedEvent);
         WallsAggregate.Events.OfType<WallsEvent, WallsEvent.WallRepaired>().Subscribe(HandleWallRepairedEvent);
+        TowersAggregate.Events.OfType<TowersEvent, TowersEvent.TowerRepaired>().Subscribe(HandleTowerRepairedEvent);
 
         Observable.NextFrame().Subscribe(_ => CreateLevel());
     }
@@ -80,7 +91,7 @@ public class MapPresenter : MonoBehaviour
                         _tiles[x, y] = Instantiate(ground, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     case TowerCell cell:
-                        _tiles[x, y] = Instantiate(brokenBasicTower, new Vector3(x, y, 0), Quaternion.identity, transform);
+                        _tiles[x, y] = Instantiate(basicTowerBroken, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     case PathCell cell:
                         var pathTile = ChoosePathSprite(initializedEvent, x, y);
@@ -169,5 +180,14 @@ public class MapPresenter : MonoBehaviour
 
         Destroy(_tiles[x, y]);
         _tiles[x, y] = Instantiate(wall, new Vector3(x, y, 0), Quaternion.identity, transform);
+    }
+
+    private void HandleTowerRepairedEvent(TowersEvent.TowerRepaired repairedEvent)
+    {
+        var x = repairedEvent.MapCoordinate.X;
+        var y = repairedEvent.MapCoordinate.Y;
+
+        Destroy(_tiles[x, y]);
+        _tiles[x, y] = Instantiate(basicTowerBase, new Vector3(x, y, 0), Quaternion.identity, transform);
     }
 }
