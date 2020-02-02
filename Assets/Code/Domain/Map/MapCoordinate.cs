@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public struct MapCoordinate : IEquatable<MapCoordinate>
 {
@@ -39,4 +40,13 @@ public struct MapCoordinate : IEquatable<MapCoordinate>
     {
         return !(left == right);
     }
+}
+
+public static class MapCoordinateExtensions
+{
+    public static Vector3 ToVector3(this MapCoordinate coord)
+        => new Vector3(coord.X, coord.Y, 0);
+
+    public static MapCoordinate ToMapCoordinate(this Vector3 vector)
+        => new MapCoordinate(Mathf.RoundToInt(vector.x), Mathf.RoundToInt(vector.y));
 }

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +11,7 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 
 	private List<Vector3> _path;
 	private Vector3 _target;
-	private bool _endOfPathReached;
+	private bool _endOfPathReached = true;
 
 	[Inject]
 	public EnemyParameters Parameters { private get; set; }
@@ -20,30 +22,41 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 	[Inject]
 	public EnemiesAggregate Enemies { private get; set; }
 
+	[Inject]
+	public PathFinderAggregate PathFinder { private get; set; }
+
 	public EnemyIdentifier Id => Parameters.EnemyId;
 
 	void Start()
 	{
 		transform.position = Parameters.Position;
 
-		var s = transform.position;
+		PathFinder.Events
+			.OfType<PathFinderEvent, PathFinderEvent.PathCalculated>()
+			.Where(pathCalculated => pathCalculated.EnemyId == Parameters.EnemyId)
+			.Subscribe(FollowPath);
+	}
 
-		_path = new List<Vector3>()
-		{
-			s + Vector3.right * 2,
-			s + Vector3.right * 2 + Vector3.down,
-			s + Vector3.right + Vector3.down
-		};
+	private void FollowPath(PathFinderEvent.PathCalculated pathCalculated)
+	{
+		_path = pathCalculated.Path.Select(mapCoord => mapCoord.ToVector3()).ToList();
 
 		_target = _path[0];
 		_path.RemoveAt(0);
+
+		_endOfPathReached = false;
 	}
 
 	void Update()
 	{
-		if (_endOfPathReached)
-			return;
+		if (!_endOfPathReached)
+			MoveTowardTarget();
 
+		Positions[Parameters.EnemyId] = transform.position;
+	}
+
+	private void MoveTowardTarget()
+	{
 		var toTarget = _target - transform.position;
 
 		if (toTarget.magnitude < 0.1f)
@@ -54,7 +67,8 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 			{
 				_target = _path[0];
 				_path.RemoveAt(0);
-			} else
+			}
+			else
 			{
 				_endOfPathReached = true;
 			}
@@ -65,8 +79,6 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 		transform.position += Velocity * dir * Time.deltaTime;
 
 		transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);
-		
-		Positions[Parameters.EnemyId] = transform.position;
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)
