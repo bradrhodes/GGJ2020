@@ -22,6 +22,7 @@ public class MapPresenter : MonoBehaviour
 
     [SerializeField] private GameObject brokenWall;
     [SerializeField] private GameObject wall;
+    [SerializeField] private GameObject water;
 
     [SerializeField] private GameObject spawner;
     [SerializeField] private GameObject castle;
@@ -92,6 +93,9 @@ public class MapPresenter : MonoBehaviour
                         break;
                     case GoalCell cell:
                         _tiles[x, y] = Instantiate(castle, new Vector3(x, y, 0), Quaternion.identity, transform);
+                        break;
+                    case WaterCell cell:
+                        _tiles[x, y] = Instantiate(water, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     default:
                         throw new NotImplementedException("Unknown cell type");

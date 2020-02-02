@@ -24,6 +24,7 @@ public class MapGenerator : IMapGenerator
 			}
 		}
 
+		AdjustForWater(path, ref map);
 		return map;
 	}
 
@@ -50,4 +51,17 @@ public class MapGenerator : IMapGenerator
 
 		return new GroundCell();
 	}
+
+    private void AdjustForWater(Path path, ref MapCell[,] map)
+    {
+        foreach (var coordinate in path.PathCoordinates)
+        {
+            var yToCheck = coordinate.Y - 1;
+            if (yToCheck < 0)
+                break;
+
+            if (map[coordinate.X, yToCheck] is GroundCell)
+                map[coordinate.X, yToCheck] = new WaterCell();
+        }
+    }
 }

@@ -25,3 +25,7 @@ public class StartCell : MapCell
 public class GoalCell : MapCell
 {
 }
+
+public class WaterCell : MapCell
+{
+}

@@ -59,5 +59,6 @@ MonoBehaviour:
   brokenWall: {fileID: 2182582343041438539, guid: c9f39d95c28d16d429078eff719860ca,
     type: 3}
   wall: {fileID: 6768641928996932945, guid: f1a8ed1e1dfd2cf4e9b29b5bbaf5be8a, type: 3}
+  water: {fileID: 8246228860364807531, guid: da2f999cd7c9e1b45ae023954445b67e, type: 3}
   spawner: {fileID: 254771457427681810, guid: adb4f579c85068f46aeac8e95587e737, type: 3}
   castle: {fileID: 70710355855191237, guid: 9618816fd49094349a3f092feeb55acb, type: 3}

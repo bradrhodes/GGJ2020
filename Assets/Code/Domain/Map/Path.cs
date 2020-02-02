@@ -5,11 +5,11 @@ namespace Assets.Code.Domain.Map
 {
     public class Path
     {
-        private readonly HashSet<MapCoordinate> _pathCoordinates;
+        public HashSet<MapCoordinate> PathCoordinates { get; }
 
         public Path(HashSet<MapCoordinate> pathCoordinates)
         {
-            _pathCoordinates = pathCoordinates;
+            PathCoordinates = pathCoordinates;
         }
 
         /// <summary>
@@ -17,17 +17,17 @@ namespace Assets.Code.Domain.Map
         /// </summary>
         public bool IsOnPath(MapCoordinate coordinate)
         {
-            return _pathCoordinates.Contains(coordinate);
+            return PathCoordinates.Contains(coordinate);
         }
 
         public bool IsStartingPoing(MapCoordinate coordinate)
         {
-            return _pathCoordinates.First() == coordinate;
+            return PathCoordinates.First() == coordinate;
         }
 
         public bool IsEndingPoint(MapCoordinate coordinate)
         {
-            return _pathCoordinates.Last() == coordinate;
+            return PathCoordinates.Last() == coordinate;
         }
     }
 }
