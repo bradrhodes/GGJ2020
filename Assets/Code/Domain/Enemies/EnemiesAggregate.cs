@@ -16,7 +16,6 @@ public class EnemiesAggregate
 
 		_timeEvents
 			.Sample(_parameters.SpawnRate)
-			.Take(_parameters.EnemyCount)
 			.Subscribe(_ => SpawnEnemy());
 	}
 
@@ -34,9 +33,6 @@ public class EnemiesAggregate
 	public void Destroy(EnemyIdentifier enemyId)
 	{
 		_enemiesDestroyed++;
-
-		if (_enemiesDestroyed == _parameters.EnemyCount)
-			Emit(new EnemiesEvent.AllEnemiesDestroyed());
 	}
 
 	private void Emit(EnemiesEvent @event)
@@ -45,13 +41,11 @@ public class EnemiesAggregate
 
 public class EnemiesAggregateParameters
 {
-	public EnemiesAggregateParameters(int enemyCount, TimeSpan spawnRate)
+	public EnemiesAggregateParameters(TimeSpan spawnRate)
 	{
-		EnemyCount = enemyCount;
-		SpawnRate = spawnRate;
+        SpawnRate = spawnRate;
 	}
 
-	public int EnemyCount { get; }
 	public TimeSpan SpawnRate { get; }
 }
 
@@ -65,10 +59,5 @@ public abstract class EnemiesEvent
 		{
 			EnemyId = enemyId;
 		}
-	}
-
-	public class AllEnemiesDestroyed : EnemiesEvent
-	{
-
 	}
 }

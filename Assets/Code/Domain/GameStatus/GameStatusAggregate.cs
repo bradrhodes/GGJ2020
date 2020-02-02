@@ -12,11 +12,6 @@ public class GameStatusAggregate
 		Emit(new GameStatusEvent.GameOver());
 	}
 
-	public void Win()
-	{
-		Emit(new GameStatusEvent.GameWon());
-	}
-
 	private void Emit(GameStatusEvent @event)
 		=> _events.OnNext(@event);
 }
@@ -24,10 +19,6 @@ public class GameStatusAggregate
 public class GameStatusEvent
 {
 	public class GameOver : GameStatusEvent
-	{
-	}
-
-	public class GameWon : GameStatusEvent
 	{
 	}
 }
