@@ -56,23 +56,8 @@ MonoBehaviour:
     type: 3}
   pathRightToBottom: {fileID: 1506943933409579212, guid: 4dfaa52bb5082bf4d92d618225411c08,
     type: 3}
-  basicTowerBroken: {fileID: 5457345453516275779, guid: fc072fde8a89577458119bea80bfd3c7,
-    type: 3}
-  basicTowerBase: {fileID: 5747582175168007918, guid: 96335ddac14f29a4291787af54456c9b,
-    type: 3}
-  fireTowerBroken: {fileID: 4196724710654058083, guid: 6aa3b6c9d2d2469488b5a6d09ef61dae,
-    type: 3}
-  fireTowerBase: {fileID: 4451032918023649305, guid: c258f8e8a0051a54d9419ee55a3484ad,
-    type: 3}
-  iceTowerBroken: {fileID: 8276014132533249382, guid: d0b1b6a36401d5d46a7880bfaae5d10b,
-    type: 3}
-  iceTowerBase: {fileID: 2791861619626144815, guid: e417c55dd1f7e0a47a12d21cfa7a53ff,
-    type: 3}
-  plasmaTowerBroken: {fileID: 870268441543041319, guid: 73f3d0f12e8152545a6e230c0ecd9899,
-    type: 3}
-  plasmaTowerBase: {fileID: 6862109941628341009, guid: 254a044e57c95954a91857763b4f3dde,
-    type: 3}
   brokenWall: {fileID: 2182582343041438539, guid: c9f39d95c28d16d429078eff719860ca,
     type: 3}
   wall: {fileID: 6768641928996932945, guid: f1a8ed1e1dfd2cf4e9b29b5bbaf5be8a, type: 3}
+  spawner: {fileID: 254771457427681810, guid: adb4f579c85068f46aeac8e95587e737, type: 3}
   castle: {fileID: 70710355855191237, guid: 9618816fd49094349a3f092feeb55acb, type: 3}

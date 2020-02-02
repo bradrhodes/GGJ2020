@@ -1,5 +1,6 @@
 ﻿using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 public class GameOverPresenter : MonoBehaviour
@@ -20,6 +21,6 @@ public class GameOverPresenter : MonoBehaviour
 
 	private void ShowGameOver()
 	{
-		GameOverCanvas.enabled = true;
+        SceneManager.LoadScene("GameOver");
 	}
 }

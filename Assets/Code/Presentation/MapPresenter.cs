@@ -23,6 +23,7 @@ public class MapPresenter : MonoBehaviour
     [SerializeField] private GameObject brokenWall;
     [SerializeField] private GameObject wall;
 
+    [SerializeField] private GameObject spawner;
     [SerializeField] private GameObject castle;
 
     private GameObject[,] _tiles;
@@ -87,7 +88,7 @@ public class MapPresenter : MonoBehaviour
                         _tiles[x, y] = Instantiate(brokenWall, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     case StartCell cell:
-                        _tiles[x, y] = Instantiate(pathTopToRight, new Vector3(x, y, 0), Quaternion.identity, transform);
+                        _tiles[x, y] = Instantiate(spawner, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     case GoalCell cell:
                         _tiles[x, y] = Instantiate(castle, new Vector3(x, y, 0), Quaternion.identity, transform);
