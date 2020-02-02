@@ -4,7 +4,7 @@ public class FireBulletPresenter : MonoBehaviour
 {
     private void Start()
     {
-        Destroy(gameObject, 1.5f);
+        Destroy(gameObject, 0.75f);
     }
 
     void OnCollisionEnter2D(Collision2D collision)

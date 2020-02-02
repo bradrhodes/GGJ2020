@@ -213,7 +213,7 @@ MonoBehaviour:
   detectorSprite: {fileID: 1630424311736155881}
   BulletPrefab: {fileID: 6056471169092515489, guid: ec5472e66f6dca04bb9266a212d7ce00,
     type: 3}
-  BulletVelocity: 2
+  BulletVelocity: 3
   _reloadTime: 0.1
 --- !u!1 &1630424311736155881
 GameObject:
