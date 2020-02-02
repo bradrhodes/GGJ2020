@@ -41,6 +41,8 @@ public class EnemiesAggregate
 	public void Destroy(EnemyIdentifier enemyId)
 	{
 		_enemiesDestroyed++;
+
+		Emit(new EnemiesEvent.EnemyDestroyed(enemyId));
 	}
 
 	private void Emit(EnemiesEvent @event)
@@ -75,5 +77,15 @@ public abstract class EnemiesEvent
 			EnemyId = enemyId;
 			Velocity = velocity;
 		}
+	}
+
+	public class EnemyDestroyed : EnemiesEvent
+	{
+		public EnemyDestroyed(EnemyIdentifier enemyId)
+		{
+			EnemyId = enemyId;
+		}
+
+		public EnemyIdentifier EnemyId { get; }
 	}
 }

@@ -27,6 +27,13 @@ public class ScrapWalletAggregate
 		Emit(new ScrapWalletEvent.AvailableScrapChanged(-amount, _currentAmount));
 	}
 
+	public void Increase(int amount)
+	{
+		_currentAmount += amount;
+
+		Emit(new ScrapWalletEvent.AvailableScrapChanged(amount, _currentAmount));
+	}
+
 	private void Emit(ScrapWalletEvent @event)
 		=> _events.OnNext(@event);
 }

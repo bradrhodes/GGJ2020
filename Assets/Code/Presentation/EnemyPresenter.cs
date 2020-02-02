@@ -115,6 +115,8 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 
         if (enemyHP <= 0f)
         {
+			Enemies.Destroy(Parameters.EnemyId);
+
             Destroy(gameObject);
         }
     }
