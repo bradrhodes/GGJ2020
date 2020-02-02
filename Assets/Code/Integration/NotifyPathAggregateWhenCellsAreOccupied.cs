@@ -8,11 +8,11 @@ using UniRx;
 
 class NotifyPathAggregateWhenCellsAreOccupied
 {
-    private readonly TilesAggregate _tile;
+    private readonly PathFinderAggregate _pathFinder;
     public NotifyPathAggregateWhenCellsAreOccupied(MapAggregate map, TowersAggregate tower, WallsAggregate wall,
-        [NotNull] TilesAggregate tile)
+        [NotNull] PathFinderAggregate pathFinder)
     {
-        _tile = tile ?? throw new ArgumentNullException(nameof(tile));
+        _pathFinder = pathFinder ?? throw new ArgumentNullException(nameof(pathFinder));
         map.Events.OfType<MapEvent, MapEvent.Initialized>().Subscribe(HandleMapInitialized);
         tower.Events.OfType<TowersEvent, TowersEvent.TowerRepaired>().Subscribe(HandleTowerRepaired);
         wall.Events.OfType<WallsEvent, WallsEvent.WallRepaired>().Subscribe(HandleWallRepaired);
@@ -23,16 +23,16 @@ class NotifyPathAggregateWhenCellsAreOccupied
         var xDimension = e.MapCells.GetLength(0);
         var yDimension = e.MapCells.GetLength(1);
 
-        _tile.Initialize(xDimension, yDimension, e.GoalCell);
+        _pathFinder.Initialize(xDimension, yDimension, e.GoalCell);
     }
 
     private void HandleTowerRepaired(TowersEvent.TowerRepaired e)
     {
-        _tile.SetTileAsOccupied(e.MapCoordinate);
+        _pathFinder.SetTileAsOccupied(e.MapCoordinate);
     }
 
     private void HandleWallRepaired(WallsEvent.WallRepaired e)
     {
-        _tile.SetTileAsOccupied(e.Coordinate);
+        _pathFinder.SetTileAsOccupied(e.Coordinate);
     }
 }

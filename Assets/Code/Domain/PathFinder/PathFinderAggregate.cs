@@ -10,7 +10,7 @@ public interface IGetEnemyPositions
     UnityEngine.Vector3 this[EnemyIdentifier enemyId] { get; }
 }
 
-public class TilesAggregate
+public class PathFinderAggregate
 {
     private readonly IGetEnemyPositions _enemyPositionService;
     public Subject<TileEvent> _events = new Subject<TileEvent>();
@@ -18,7 +18,7 @@ public class TilesAggregate
     private HashSet<EnemyIdentifier> _enemies = new HashSet<EnemyIdentifier>();
     private MapCoordinate _goalCell = new MapCoordinate(0,0);
 
-    public TilesAggregate([NotNull] IGetEnemyPositions enemyPositionService)
+    public PathFinderAggregate([NotNull] IGetEnemyPositions enemyPositionService)
     {
         _enemyPositionService = enemyPositionService ?? throw new ArgumentNullException(nameof(enemyPositionService));
     }

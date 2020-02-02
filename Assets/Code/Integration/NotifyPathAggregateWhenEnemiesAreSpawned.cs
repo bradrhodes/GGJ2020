@@ -4,14 +4,14 @@ namespace Assets.Code.Integration
 {
     public class NotifyPathAggregateWhenEnemiesAreSpawned
     {
-        public NotifyPathAggregateWhenEnemiesAreSpawned(EnemiesAggregate enemy, TilesAggregate tile)
+        public NotifyPathAggregateWhenEnemiesAreSpawned(EnemiesAggregate enemy, PathFinderAggregate pathFinder)
         {
-            enemy.Events.OfType<EnemiesEvent, EnemiesEvent.EnemySpawned>().Subscribe(spawned => HandleEnemiesSpawnedEvent(spawned, tile));
+            enemy.Events.OfType<EnemiesEvent, EnemiesEvent.EnemySpawned>().Subscribe(spawned => HandleEnemiesSpawnedEvent(spawned, pathFinder));
         }
 
-        private void HandleEnemiesSpawnedEvent(EnemiesEvent.EnemySpawned e, TilesAggregate tiles)
+        private void HandleEnemiesSpawnedEvent(EnemiesEvent.EnemySpawned e, PathFinderAggregate pathFinder)
         {
-            tiles.AddEnemy(e.EnemyId);
+            pathFinder.AddEnemy(e.EnemyId);
         }
     }
 }
