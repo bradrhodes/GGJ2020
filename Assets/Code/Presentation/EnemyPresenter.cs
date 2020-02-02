@@ -8,8 +8,8 @@ using Zenject;
 public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 {
 	private float _velocity;
-    public int MinVelocity = 3;
-    public int NormalVelocity = 10;
+    public float MinVelocity = 0.5f;
+    private float MaxVelocity;
     public float FreezeTime = 1;
     public int enemyHP = 5;
 
@@ -34,6 +34,7 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 	void Start()
 	{
 		_velocity = Parameters.Velocity;
+        MaxVelocity = _velocity;
 
 		transform.position = Parameters.Position;
 
@@ -117,13 +118,13 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
     IEnumerator Freezing()
     {
         yield return new WaitForSeconds(FreezeTime);
-        if (_velocity < NormalVelocity / 2)
+        if (_velocity < MaxVelocity / 2)
         {
             _velocity *= 2;
         }
         else
         {
-            _velocity = NormalVelocity;
+            _velocity = MaxVelocity;
         }
     }
 }
