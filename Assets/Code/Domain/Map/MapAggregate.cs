@@ -7,7 +7,7 @@ using UnityEngine;
 public class MapAggregate
 {
     private Subject<MapEvent> _events = new Subject<MapEvent>();
-    private readonly MapGenerator _mapGenerator;
+    private readonly IMapGenerator _mapGenerator;
 
     public IObservable<MapEvent> Events => _events;
 
@@ -20,9 +20,9 @@ public class MapAggregate
     private void Emit(MapEvent @event)
         => _events.OnNext(@event);
 
-    public MapAggregate(MapGenerator mapGenerator)
+    public MapAggregate(IMapGenerator mapGenerator)
     {
-        this._mapGenerator = mapGenerator;
+        _mapGenerator = mapGenerator;
     }
 
     public void ClickMapCell(int xCoordinate, int yCoordinate)
