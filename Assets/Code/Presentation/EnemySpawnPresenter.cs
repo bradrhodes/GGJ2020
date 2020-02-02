@@ -17,12 +17,12 @@ public class EnemySpawnPresenter : MonoBehaviour
 	{
 		Enemies.Events
 			.OfType<EnemiesEvent, EnemiesEvent.EnemySpawned>()
-			.Subscribe(enemySpawned => SpawnEnemy(enemySpawned.EnemyId))
+			.Subscribe(enemySpawned => SpawnEnemy(enemySpawned.EnemyId, enemySpawned.Velocity))
 			.AddTo(this);
 	}
 
-	private void SpawnEnemy(EnemyIdentifier enemyId)
+	private void SpawnEnemy(EnemyIdentifier enemyId, float velocity)
 	{
-		EnemyFactory.Create(new EnemyParameters(enemyId, transform.position));
+		EnemyFactory.Create(new EnemyParameters(enemyId, transform.position, velocity));
 	}
 }

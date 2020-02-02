@@ -7,7 +7,7 @@ using Zenject;
 
 public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 {
-    public float Velocity;
+	private float _velocity;
     public int MinVelocity = 3;
     public int NormalVelocity = 10;
     public float FreezeTime = 1;
@@ -33,6 +33,8 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 
 	void Start()
 	{
+		_velocity = Parameters.Velocity;
+
 		transform.position = Parameters.Position;
 
 		PathFinder.Events
@@ -80,7 +82,7 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 
 		var dir = toTarget.normalized;
 
-		transform.position += Velocity * dir * Time.deltaTime;
+		transform.position += _velocity * dir * Time.deltaTime;
 
 		transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);
 	}
