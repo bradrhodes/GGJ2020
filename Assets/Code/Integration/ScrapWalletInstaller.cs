@@ -8,6 +8,7 @@ public class ScrapWalletInstaller : MonoInstaller
 
 		Container.Bind<DecreaseScrapWhenTowerRepaired>().AsSingle().NonLazy();
 		Container.Bind<DecreaseScrapWhenWallRepaired>().AsSingle().NonLazy();
+		Container.Bind<UpdateTowersAndWallsAvailableScrap>().AsSingle().NonLazy();
 
 		Container.BindInstance(new RepairCosts(100, 50));
 	}

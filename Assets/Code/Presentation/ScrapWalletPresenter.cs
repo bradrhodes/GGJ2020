@@ -16,12 +16,8 @@ public class ScrapWalletPresenter : MonoBehaviour
 	private void Start()
 	{
 		ScrapWallet.Events
-			.OfType<ScrapWalletEvent, ScrapWalletEvent.Initialized>()
-			.Subscribe(initialized => SetAmount(initialized.Amount));
-
-		ScrapWallet.Events
-			.OfType<ScrapWalletEvent, ScrapWalletEvent.Decreased>()
-			.Subscribe(decreased => SetAmount(decreased.CurrentAmount));
+			.OfType<ScrapWalletEvent, ScrapWalletEvent.AvailableScrapChanged>()
+			.Subscribe(changed => SetAmount(changed.CurrentAmount));
 	}
 
 	private void SetAmount(int amount)

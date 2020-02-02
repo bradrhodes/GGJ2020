@@ -16,6 +16,14 @@ public class TowersAggregate
 
 	private Dictionary<TowerIdentifier, EnemyIdentifier> _targettedEnemies = new Dictionary<TowerIdentifier, EnemyIdentifier>();
 
+	private int _availableScrap;
+	private readonly RepairCosts _repairCosts;
+
+	public TowersAggregate(RepairCosts repairCosts)
+	{
+		_repairCosts = repairCosts;
+	}
+
 	public void Initialize(params TowerParameters[] towers)
     {
         _towers = towers.ToDictionary(tower => tower.TowerId,
@@ -60,6 +68,9 @@ public class TowersAggregate
 	}
     public void Repair(TowerIdentifier identifier)
     {
+		if (_availableScrap < _repairCosts.Tower)
+			return;
+
         if (!_towers.ContainsKey(identifier))
             return;
 
@@ -82,6 +93,11 @@ public class TowersAggregate
 
 		Repair(tower.Identifier);
     }
+
+	public void UpdateAvailableScrap(int amount)
+	{
+		_availableScrap = amount;
+	}
 
 	private void Emit(TowersEvent @event)
 		=> _events.OnNext(@event);
