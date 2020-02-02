@@ -1,33 +1,29 @@
-﻿using UniRx;
+﻿using System.Linq;
+using UniRx;
+using RoyT.AStar;
 
 public class TilesAggregate
 {
     public Subject<TileEvent> _events = new Subject<TileEvent>();
-    private bool[,] _occupiedTiles = new bool[0,0];
-
-    public TilesAggregate()
-    {
-        
-    }
+    private RoyT.AStar.Grid _grid = new Grid(0, 0);
 
     public void Initialize(int xDimension, int yDimension)
     {
-        _occupiedTiles = new bool[xDimension, yDimension];
-        var outArray = new bool[xDimension, yDimension];
-        for (var x = 0; x < xDimension; x++)
-        for (var y = 0; y < yDimension; y++)
-        {
-            _occupiedTiles[x, y] = false;
-            outArray[x, y] = false;
-        }
-
-        Emit(new TileEvent.TilesInitialized(outArray));
+        _grid = new Grid(xDimension, yDimension);
     }
 
     public void SetTileAsOccupied(MapCoordinate coordinate)
     {
-        _occupiedTiles[coordinate.X, coordinate.Y] = true;
+        _grid.BlockCell(coordinate.ToPosition());
         Emit(new TileEvent.TileOccupied(coordinate));
+    }
+
+    public void FindPath(MapCoordinate currentLocation, MapCoordinate goalLocation)
+    {
+        var path = _grid.GetPath(currentLocation.ToPosition(), goalLocation.ToPosition(), MovementPatterns.LateralOnly)
+            .Select(position => position.ToMapCoordinate()).ToArray();
+
+        Emit(new TileEvent.PathCalculated(path));
     }
 
     private void Emit(TileEvent @event)
@@ -55,5 +51,29 @@ public abstract class TileEvent
         {
             Coordinate = coordinate;
         }
+    }
+
+    public class PathCalculated : TileEvent
+    {
+        private readonly MapCoordinate[] _path;
+
+        public PathCalculated(MapCoordinate[] path)
+        {
+            _path = path;
+        }
+    }
+
+}
+
+public static class TileExtensions
+{
+    public static Position ToPosition(this MapCoordinate source)
+    {
+        return new Position(source.X, source.Y);
+    }
+
+    public static MapCoordinate ToMapCoordinate(this Position source)
+    {
+        return new MapCoordinate(source.X, source.Y);
     }
 }
