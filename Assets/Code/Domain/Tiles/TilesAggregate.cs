@@ -2,6 +2,11 @@
 using UniRx;
 using RoyT.AStar;
 
+public interface IGetEnemyPositions
+{
+    UnityEngine.Vector3 this[EnemyIdentifier enemyId] { get; }
+}
+
 public class TilesAggregate
 {
     public Subject<TileEvent> _events = new Subject<TileEvent>();

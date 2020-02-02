@@ -17,7 +17,7 @@ public class EnemiesInstaller : MonoInstaller
 			.AsSingle()
 			.WithArguments(new EnemiesAggregateParameters(TimeSpan.FromSeconds(2)));
 
-		Container.Bind<EnemyPositions>()
+		Container.BindInterfacesAndSelfTo<EnemyPositions>()
 			.AsSingle();
 	}
 }

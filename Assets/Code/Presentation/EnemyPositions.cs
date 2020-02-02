@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPositions
+public class EnemyPositions : IGetEnemyPositions
 {
 	private readonly Dictionary<EnemyIdentifier, Vector3> _positions = new Dictionary<EnemyIdentifier, Vector3>();
 
