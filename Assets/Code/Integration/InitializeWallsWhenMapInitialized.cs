@@ -16,7 +16,7 @@ public class InitializeWallsWhenMapInitialized
 
         var initialWalls = mapCoords
             .Where(coord => initialized.MapCells[coord.X, coord.Y] is WallCell)
-            .Select(coord => new InitialWall(coord))
+            .Select(coord => new WallParameters(coord))
             .ToArray();
 
         walls.Initialize(initialWalls);

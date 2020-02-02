@@ -1,6 +1,6 @@
-﻿public class InitialWall
+﻿public class WallParameters
 {
-    public InitialWall(MapCoordinate coordinate)
+    public WallParameters(MapCoordinate coordinate)
     {
         Coordinate = coordinate;
     }

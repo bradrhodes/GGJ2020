@@ -5,6 +5,7 @@ public class TowersInstaller : MonoInstaller
 {
 	public GameObject TowerPrefab;
 	public Transform TowersParent;
+	public TowerTypeMap TowerTypes;
 
 	public override void InstallBindings()
 	{
@@ -12,9 +13,9 @@ public class TowersInstaller : MonoInstaller
 		Container.Bind<InitializeTowersWhenMapInitialized>().AsSingle().NonLazy();
         Container.Bind<RepairTowersWhenMapCellClicked>().AsSingle().NonLazy();
 
-		Container.BindIFactory<InitialTower, TowerInstaller>()
-			.FromSubContainerResolve()
-			.ByNewPrefabInstaller<TowerInstaller>(TowerPrefab)
-			.UnderTransform(TowersParent);
+		Container.BindIFactory<TowerParameters, TowerPresenter>()
+			.FromFactory<TowerFactory>();
+
+		Container.BindInstance(TowerTypes);
 	}
 }

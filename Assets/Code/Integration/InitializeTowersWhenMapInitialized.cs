@@ -16,7 +16,7 @@ public class InitializeTowersWhenMapInitialized
 
         var initialTowers = mapCoords
             .Where(coord => initialized.MapCells[coord.X, coord.Y] is TowerCell)
-            .Select(coord => new InitialTower(TowerIdentifier.Create(), coord))
+            .Select(coord => new TowerParameters(TowerIdentifier.Create(), coord, TowerTypes.Basic))
             .ToArray();
 
         towers.Initialize(initialTowers);

@@ -16,7 +16,7 @@ public class TowersAggregate
 
 	private Dictionary<TowerIdentifier, EnemyIdentifier> _targettedEnemies = new Dictionary<TowerIdentifier, EnemyIdentifier>();
 
-	public void Initialize(params InitialTower[] towers)
+	public void Initialize(params TowerParameters[] towers)
     {
         _towers = towers.ToDictionary(tower => tower.TowerId,
             tower => new Tower(tower.TowerId, tower.Coordinate, TowerState.Broken));
@@ -107,28 +107,30 @@ public enum TowerState
 	Repaired
 }
 
-public class InitialTower
+public class TowerParameters
 {
-	public InitialTower(TowerIdentifier towerId, MapCoordinate coordinate)
+	public TowerParameters(TowerIdentifier towerId, MapCoordinate coordinate, TowerTypes towerType)
 	{
 		TowerId = towerId;
 		Coordinate = coordinate;
+		TowerType = towerType;
 	}
 
 	public TowerIdentifier TowerId { get; }
 	public MapCoordinate Coordinate { get; }
+	public TowerTypes TowerType { get; }
 }
 
 public abstract class TowersEvent
 {
 	public class Initialized : TowersEvent
 	{
-		public Initialized(params InitialTower[] towers)
+		public Initialized(params TowerParameters[] towers)
 		{
 			Towers = towers;
 		}
 
-		public IEnumerable<InitialTower> Towers { get; }
+		public IEnumerable<TowerParameters> Towers { get; }
 	}
 
 	public class EnemyTargetted : TowersEvent

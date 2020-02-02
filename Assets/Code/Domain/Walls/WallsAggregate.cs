@@ -12,7 +12,7 @@ public class WallsAggregate
 
 	public IObservable<WallsEvent> Events => _events;
 
-	public void Initialize(params InitialWall[] walls)
+	public void Initialize(params WallParameters[] walls)
     {
         _walls = walls.ToDictionary(wall => wall.Coordinate, wall => new Wall(wall.Coordinate, WallState.Broken));
         Emit(new WallsEvent.Initialized(walls));

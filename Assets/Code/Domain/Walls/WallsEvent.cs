@@ -4,12 +4,12 @@ public abstract class WallsEvent
 {
     public class Initialized : WallsEvent
     {
-        public Initialized(params InitialWall[] Walls)
+        public Initialized(params WallParameters[] Walls)
         {
             Walls = Walls;
         }
 
-        public IEnumerable<InitialWall> Walls { get; }
+        public IEnumerable<WallParameters> Walls { get; }
     }
 
     public class WallRepaired : WallsEvent

@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 484455163}
   - component: {fileID: 484455164}
   - component: {fileID: 484455165}
+  - component: {fileID: 484455166}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -445,6 +446,7 @@ MonoBehaviour:
   TowerPrefab: {fileID: 1630424311239262505, guid: d83e8600fbd8aa34d90a1319603cc8d2,
     type: 3}
   TowersParent: {fileID: 2135995251}
+  TowerTypes: {fileID: 484455166}
 --- !u!114 &484455164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,6 +474,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce347a0afc395204da256f8fe4ee06e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &484455166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484455158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d488cdf3dbd03488aa677305d5b3e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BasicTowerPrefab: {fileID: 1630424311239262505, guid: d83e8600fbd8aa34d90a1319603cc8d2,
+    type: 3}
+  FireTowerPrefab: {fileID: 1630424311239262505, guid: 8c4df926de4c7b94bbf8d86446a1b350,
+    type: 3}
+  IceTowerPrefab: {fileID: 1630424311239262505, guid: 86fb869efe17ac84caea3434ca7b775f,
+    type: 3}
+  PlasmaTowerPrefab: {fileID: 1630424311239262505, guid: e119b9b875f93a34abd7f3ec53c6cf36,
+    type: 3}
 --- !u!1 &632434510
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,8 +1169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d332fe907342b40b5067ceb402e0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerPrefab: {fileID: 1630424311239262505, guid: d83e8600fbd8aa34d90a1319603cc8d2,
-    type: 3}
 --- !u!4 &2135995251
 Transform:
   m_ObjectHideFlags: 0

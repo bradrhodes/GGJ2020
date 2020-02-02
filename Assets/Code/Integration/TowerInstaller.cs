@@ -6,7 +6,7 @@ using Zenject;
 public class TowerInstaller : Installer
 {
     [Inject]
-    public InitialTower Parameters { private get; set; }
+    public TowerParameters Parameters { private get; set; }
 
     public override void InstallBindings()
     {

@@ -4,7 +4,7 @@ using Zenject;
 public class TowerDetectorPresenter : MonoBehaviour
 {
 	[Inject]
-	public InitialTower Parameters { private get; set; }
+	public TowerParameters Parameters { private get; set; }
 
 	[Inject]
 	public TowersAggregate Towers { private get; set; }
