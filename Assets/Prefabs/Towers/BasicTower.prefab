@@ -131,7 +131,7 @@ MonoBehaviour:
   baseSprite: {fileID: 2167199086049730789}
   turretSprite: {fileID: 1630424310900595027}
   detectorSprite: {fileID: 1630424311736155881}
-  BulletPrefab: {fileID: 6056471169092515489, guid: 244346459e2d87f499874350e37a1edb,
+  BulletPrefab: {fileID: 6056471169092515489, guid: 55c4365e8e1949a419f654f3e3eba62e,
     type: 3}
   BulletVelocity: 20
 --- !u!1 &1630424311736155881

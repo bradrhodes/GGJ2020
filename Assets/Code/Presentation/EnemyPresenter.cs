@@ -7,7 +7,11 @@ using Zenject;
 
 public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 {
-	public float Velocity;
+	private float _velocity;
+    public int MinVelocity = 3;
+    public int NormalVelocity = 10;
+    public float FreezeTime = 1;
+    public int enemyHP = 5;
 
 	private List<Vector3> _path;
 	private Vector3 _target;
@@ -29,6 +33,8 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 
 	void Start()
 	{
+		_velocity = Parameters.Velocity;
+
 		transform.position = Parameters.Position;
 
 		PathFinder.Events
@@ -76,17 +82,48 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 
 		var dir = toTarget.normalized;
 
-		transform.position += Velocity * dir * Time.deltaTime;
+		transform.position += _velocity * dir * Time.deltaTime;
 
 		transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		Debug.Log($"{Id} got hit!");
+        if (collision.gameObject.tag.Equals("Ice"))
+        {
+            if (_velocity > MinVelocity)
+            {
+                Debug.Log("I got froze!");
+                StartCoroutine(Freezing());
+                _velocity *= 0.5f;
+            }
+            else
+            {
+                _velocity = MinVelocity;
+            }
+        }
+        else
+        {
+            enemyHP--; 
+            Debug.Log("I got hit!");
+        }
 
-		Enemies.Destroy(Parameters.EnemyId);
+        if (enemyHP == 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 
-		Destroy(gameObject);
-	}
+    IEnumerator Freezing()
+    {
+        yield return new WaitForSeconds(FreezeTime);
+        if (_velocity < NormalVelocity / 2)
+        {
+            _velocity *= 2;
+        }
+        else
+        {
+            _velocity = NormalVelocity;
+        }
+    }
 }
