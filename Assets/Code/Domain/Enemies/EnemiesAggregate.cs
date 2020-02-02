@@ -8,6 +8,8 @@ public class EnemiesAggregate
 
 	private readonly EnemiesAggregateParameters _parameters;
 
+	private int _enemiesDestroyed;
+
 	public EnemiesAggregate(EnemiesAggregateParameters parameters)
 	{
 		_parameters = parameters;
@@ -15,12 +17,27 @@ public class EnemiesAggregate
 		_timeEvents
 			.Sample(_parameters.SpawnRate)
 			.Take(_parameters.EnemyCount)
-			.Subscribe(_ => Emit(new EnemiesEvent.EnemySpawned(EnemyIdentifier.Create())));
+			.Subscribe(_ => SpawnEnemy());
+	}
+
+	private void SpawnEnemy()
+	{
+		var enemyId = EnemyIdentifier.Create();
+
+		Emit(new EnemiesEvent.EnemySpawned(enemyId));
 	}
 
 	public IObservable<EnemiesEvent> Events => _events;
 
 	public IObserver<TimeEvent> TimeObserver => _timeEvents;
+
+	public void Destroy(EnemyIdentifier enemyId)
+	{
+		_enemiesDestroyed++;
+
+		if (_enemiesDestroyed == _parameters.EnemyCount)
+			Emit(new EnemiesEvent.AllEnemiesDestroyed());
+	}
 
 	private void Emit(EnemiesEvent @event)
 		=> _events.OnNext(@event);
@@ -48,5 +65,10 @@ public abstract class EnemiesEvent
 		{
 			EnemyId = enemyId;
 		}
+	}
+
+	public class AllEnemiesDestroyed : EnemiesEvent
+	{
+
 	}
 }

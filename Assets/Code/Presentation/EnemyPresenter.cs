@@ -13,6 +13,9 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 	[Inject]
 	public EnemyPositions Positions { private get; set; }
 
+	[Inject]
+	public EnemiesAggregate Enemies { private get; set; }
+
 	public EnemyIdentifier Id => Parameters.EnemyId;
 
 	void Start()
@@ -29,6 +32,8 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 	void OnCollisionEnter2D(Collision2D collision)
 	{
 		Debug.Log($"{Id} got hit!");
+
+		Enemies.Destroy(Parameters.EnemyId);
 
 		Destroy(gameObject);
 	}

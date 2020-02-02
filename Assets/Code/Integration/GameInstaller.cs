@@ -6,5 +6,7 @@ public class GameInstaller : MonoInstaller
 	{
 		Container.Bind<TimeIntegration>().AsSingle().NonLazy();
 		Container.Bind<GameStatusAggregate>().AsSingle();
+
+		Container.Bind<GameWonWhenAllEnemiesDestroyed>().AsSingle().NonLazy();
 	}
 }
