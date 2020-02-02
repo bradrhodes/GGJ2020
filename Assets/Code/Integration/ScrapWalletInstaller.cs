@@ -6,7 +6,9 @@ public class ScrapWalletInstaller : MonoInstaller
 	{
 		Container.Bind<ScrapWalletAggregate>().AsSingle().WithArguments(new ScrapWalletParameters(1000));
 
-		Container.Bind<DecreaseScrapWhenTowerRepaired>().AsSingle().WithArguments(100).NonLazy();
-		Container.Bind<DecreaseScrapWhenWallRepaired>().AsSingle().WithArguments(10).NonLazy();
+		Container.Bind<DecreaseScrapWhenTowerRepaired>().AsSingle().NonLazy();
+		Container.Bind<DecreaseScrapWhenWallRepaired>().AsSingle().NonLazy();
+
+		Container.BindInstance(new RepairCosts(100, 50));
 	}
 }

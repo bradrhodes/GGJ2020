@@ -2,10 +2,10 @@
 
 public class DecreaseScrapWhenWallRepaired
 {
-	public DecreaseScrapWhenWallRepaired(WallsAggregate walls, ScrapWalletAggregate scrapWallet, int repairCost)
+	public DecreaseScrapWhenWallRepaired(WallsAggregate walls, ScrapWalletAggregate scrapWallet, RepairCosts repairCosts)
 	{
 		walls.Events
 			.OfType<WallsEvent, WallsEvent.WallRepaired>()
-			.Subscribe(_ => scrapWallet.Decrease(repairCost));
+			.Subscribe(_ => scrapWallet.Decrease(repairCosts.Wall));
 	}
 }
