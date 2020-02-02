@@ -7,7 +7,11 @@ using Zenject;
 
 public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 {
-	public float Velocity;
+    public float Velocity;
+    public int MinVelocity = 3;
+    public int NormalVelocity = 10;
+    public float FreezeTime = 1;
+    public int enemyHP = 5;
 
 	private List<Vector3> _path;
 	private Vector3 _target;
@@ -83,10 +87,41 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		Debug.Log($"{Id} got hit!");
+        if (collision.gameObject.tag.Equals("Ice"))
+        {
+            if (Velocity > MinVelocity)
+            {
+                Debug.Log("I got froze!");
+                StartCoroutine(Freezing());
+                Velocity *= 0.5f;
+            }
+            else
+            {
+                Velocity = MinVelocity;
+            }
+        }
+        else
+        {
+            enemyHP--; 
+            Debug.Log("I got hit!");
+        }
 
-		Enemies.Destroy(Parameters.EnemyId);
+        if (enemyHP == 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 
-		Destroy(gameObject);
-	}
+    IEnumerator Freezing()
+    {
+        yield return new WaitForSeconds(FreezeTime);
+        if (Velocity < NormalVelocity / 2)
+        {
+            Velocity *= 2;
+        }
+        else
+        {
+            Velocity = NormalVelocity;
+        }
+    }
 }
