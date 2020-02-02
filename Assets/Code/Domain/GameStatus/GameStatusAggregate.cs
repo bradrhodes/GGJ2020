@@ -4,21 +4,66 @@ using UniRx;
 public class GameStatusAggregate
 {
 	private Subject<GameStatusEvent> _events = new Subject<GameStatusEvent>();
+	private readonly GameStatusParameters _parameters;
+
+	private int _currentLives;
 
 	public IObservable<GameStatusEvent> Events => _events;
 
-	public void Lose()
+	public GameStatusAggregate(GameStatusParameters parameters)
 	{
-		Emit(new GameStatusEvent.GameOver());
+		_parameters = parameters;
+
+		_currentLives = parameters.Lives;
+	}
+
+	public void LoseLife()
+	{
+		_currentLives--;
+
+		Emit(new GameStatusEvent.LifeLost(_currentLives));
+
+		if (_currentLives == 0)
+			Emit(new GameStatusEvent.GameOver());
 	}
 
 	private void Emit(GameStatusEvent @event)
 		=> _events.OnNext(@event);
 }
 
+public class GameStatusParameters
+{
+	public GameStatusParameters(int lives)
+	{
+		Lives = lives;
+	}
+
+	public int Lives { get; }
+}
+
 public class GameStatusEvent
 {
 	public class GameOver : GameStatusEvent
 	{
+	}
+
+	public class LivesInitialized : GameStatusEvent
+	{
+		public LivesInitialized(int lives)
+		{
+			Lives = lives;
+		}
+
+		public int Lives { get; }
+	}
+
+	public class LifeLost : GameStatusEvent
+	{
+		public LifeLost(int lives)
+		{
+			Lives = lives;
+		}
+
+		public int Lives { get; }
 	}
 }

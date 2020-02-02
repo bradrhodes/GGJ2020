@@ -43,6 +43,6 @@ public class GoalCellPresenter : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		GameStatus.Lose();
+		GameStatus.LoseLife();
 	}
 }
