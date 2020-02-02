@@ -111,10 +111,12 @@ public abstract class TowersEvent
 	public class TowerRepaired : TowersEvent
 	{
         public MapCoordinate MapCoordinate { get; }
+        public TowerIdentifier Identifier { get; }
 
-        public TowerRepaired(MapCoordinate mapCoordinate)
+        public TowerRepaired(MapCoordinate mapCoordinate, TowerIdentifier identifier)
         {
             MapCoordinate = mapCoordinate;
+            Identifier = identifier;
         }
 	}
 }
