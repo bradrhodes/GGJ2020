@@ -4,13 +4,16 @@ using Zenject;
 
 public class TowerPresenter : MonoBehaviour
 {
+    [SerializeField] private GameObject brokenBaseSprite;
+    [SerializeField] private GameObject baseSprite;
+    [SerializeField] private GameObject turretSprite;
+    [SerializeField] private GameObject detectorSprite;
+
 	public GameObject BulletPrefab;
 
 	public float BulletVelocity = 40f;
 
-	public GameObject Turret;
-
-	[Inject]
+    [Inject]
 	public TowerParameters Parameters { private get; set; }
 
 	[Inject]
@@ -23,6 +26,13 @@ public class TowerPresenter : MonoBehaviour
 	{
 		transform.position = new Vector3(Parameters.Coordinate.X, Parameters.Coordinate.Y, 0);
 
+        ShowBrokenTower();
+
+        Towers.Events
+            .OfType<TowersEvent, TowersEvent.TowerRepaired>()
+            .Where(repaired => repaired.Identifier == Parameters.TowerId)
+            .Subscribe(repaired => ShowRepairedTower());
+
 		Towers.Events
 			.OfType<TowersEvent, TowersEvent.EnemyTargetted>()
 			.Where(enemyTargetted => enemyTargetted.TowerId == Parameters.TowerId)
@@ -33,6 +43,22 @@ public class TowerPresenter : MonoBehaviour
 			.Where(enemyUntargetted => enemyUntargetted.TowerId == Parameters.TowerId)
 			.Subscribe(enemyUntargetted => UntargetEnemy(enemyUntargetted.EnemyId));
 	}
+
+    private void ShowBrokenTower()
+    {
+        brokenBaseSprite.SetActive(true);
+		baseSprite.SetActive(false);
+        turretSprite.SetActive(false);
+        detectorSprite.SetActive(false);
+	}
+
+    private void ShowRepairedTower()
+    {
+        brokenBaseSprite.SetActive(false);
+        baseSprite.SetActive(true);
+        turretSprite.SetActive(true);
+        detectorSprite.SetActive(true);
+    }
 
 	private void TargetEnemy(EnemyIdentifier enemyId)
 	{

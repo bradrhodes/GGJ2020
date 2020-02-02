@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UniRx;
+using UnityEngine;
 
 public class InitializeTowersWhenMapInitialized
 {
@@ -16,9 +17,25 @@ public class InitializeTowersWhenMapInitialized
 
         var initialTowers = mapCoords
             .Where(coord => initialized.MapCells[coord.X, coord.Y] is TowerCell)
-            .Select(coord => new TowerParameters(TowerIdentifier.Create(), coord, TowerTypes.Basic))
+            .Select(coord => new TowerParameters(TowerIdentifier.Create(), coord, PickRandomTowerType()))
             .ToArray();
 
         towers.Initialize(initialTowers);
+    }
+
+    private TowerTypes PickRandomTowerType()
+    {
+        float randomNumber = Random.value;
+
+        if (randomNumber <= 0.25f)
+            return TowerTypes.Basic;
+
+        if (randomNumber <= 0.50f)
+            return TowerTypes.Ice;
+
+        if (randomNumber <= 0.75f)
+            return TowerTypes.Fire;
+
+        return TowerTypes.Plasma;
     }
 }

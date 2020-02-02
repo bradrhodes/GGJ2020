@@ -20,18 +20,6 @@ public class MapPresenter : MonoBehaviour
     [SerializeField] private GameObject pathTopToBottom;
     [SerializeField] private GameObject pathRightToBottom;
 
-    [SerializeField] private GameObject basicTowerBroken;
-    [SerializeField] private GameObject basicTowerBase;
-
-    [SerializeField] private GameObject fireTowerBroken;
-    [SerializeField] private GameObject fireTowerBase;
-
-    [SerializeField] private GameObject iceTowerBroken;
-    [SerializeField] private GameObject iceTowerBase;
-
-    [SerializeField] private GameObject plasmaTowerBroken;
-    [SerializeField] private GameObject plasmaTowerBase;
-
     [SerializeField] private GameObject brokenWall;
     [SerializeField] private GameObject wall;
 
@@ -54,7 +42,6 @@ public class MapPresenter : MonoBehaviour
         Random.InitState((int)System.DateTime.Now.Ticks);
         MapAggregate.Events.OfType<MapEvent, MapEvent.Initialized>().Subscribe(HandleMapInitializedEvent);
         WallsAggregate.Events.OfType<WallsEvent, WallsEvent.WallRepaired>().Subscribe(HandleWallRepairedEvent);
-        TowersAggregate.Events.OfType<TowersEvent, TowersEvent.TowerRepaired>().Subscribe(HandleTowerRepairedEvent);
 
         Observable.NextFrame().Subscribe(_ => CreateLevel());
     }
@@ -91,7 +78,6 @@ public class MapPresenter : MonoBehaviour
                         _tiles[x, y] = Instantiate(ground, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     case TowerCell cell:
-                        _tiles[x, y] = Instantiate(basicTowerBroken, new Vector3(x, y, 0), Quaternion.identity, transform);
                         break;
                     case PathCell cell:
                         var pathTile = ChoosePathSprite(initializedEvent, x, y);
@@ -182,12 +168,12 @@ public class MapPresenter : MonoBehaviour
         _tiles[x, y] = Instantiate(wall, new Vector3(x, y, 0), Quaternion.identity, transform);
     }
 
-    private void HandleTowerRepairedEvent(TowersEvent.TowerRepaired repairedEvent)
-    {
-        var x = repairedEvent.MapCoordinate.X;
-        var y = repairedEvent.MapCoordinate.Y;
+    //private void HandleTowerRepairedEvent(TowersEvent.TowerRepaired repairedEvent)
+    //{
+    //    var x = repairedEvent.MapCoordinate.X;
+    //    var y = repairedEvent.MapCoordinate.Y;
 
-        Destroy(_tiles[x, y]);
-        _tiles[x, y] = Instantiate(basicTowerBase, new Vector3(x, y, 0), Quaternion.identity, transform);
-    }
+    //    Destroy(_tiles[x, y]);
+    //    _tiles[x, y] = Instantiate(basicTowerBase, new Vector3(x, y, 0), Quaternion.identity, transform);
+    //}
 }
