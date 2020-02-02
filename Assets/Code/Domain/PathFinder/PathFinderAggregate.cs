@@ -64,7 +64,7 @@ public class PathFinderAggregate
     private void AdjustInitialCostOfTraversal(MapCell[,] map)
     {
         for(int x = 0; x < map.GetLength(0); x++)
-        for (int y = 0; x < map.GetLength(1); y++)
+        for (int y = 0; y < map.GetLength(1); y++)
         {
             switch (map[x,y])
             {
@@ -72,7 +72,10 @@ public class PathFinderAggregate
 						_grid.BlockCell(new Position(x,y));
                         break;
 					case WallCell cell:
-						_grid.SetCellCost(new Position(x,y), 2.0f);
+						_grid.SetCellCost(new Position(x,y), 15.0f);
+                        break;
+					case TowerCell cell:
+						_grid.SetCellCost(new Position(x,y), 25.0f);
                         break;
             }
         }
