@@ -15,7 +15,7 @@ public class TowerPresenter : MonoBehaviour
 
 	private EnemyIdentifier _target;
 
-	private float _reloadTime = 1f;
+    [SerializeField] private float _reloadTime = 1f;
 	private float _remainingReloadTime;
 
 	[Inject]

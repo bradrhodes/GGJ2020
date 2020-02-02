@@ -11,7 +11,7 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
     public float MinVelocity = 0.5f;
     private float MaxVelocity;
     public float FreezeTime = 1;
-    public int enemyHP = 5;
+    public float enemyHP = 5f;
 
 	private List<Vector3> _path;
 	private Vector3 _target;
@@ -103,13 +103,17 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
                 _velocity = MinVelocity;
             }
         }
+		else if (collision.gameObject.tag.Equals("Flame"))
+        {
+            enemyHP -= 0.2f;
+        }
         else
         {
             enemyHP--; 
             Debug.Log("I got hit!");
         }
 
-        if (enemyHP == 0)
+        if (enemyHP <= 0f)
         {
             Destroy(gameObject);
         }
