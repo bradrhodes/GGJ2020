@@ -6,4 +6,8 @@ public class BulletPresenter : MonoBehaviour
     {
         GameObject.Destroy(gameObject);
     }
+    private void Update()
+    {
+        Destroy(gameObject, 1f);
+    }
 }

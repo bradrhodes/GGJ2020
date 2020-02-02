@@ -10,7 +10,7 @@ public class IceBulletPresenter : MonoBehaviour
     void Start()
     {
         originPos = transform.position;
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 1f);
     }
 
     public void Update()
