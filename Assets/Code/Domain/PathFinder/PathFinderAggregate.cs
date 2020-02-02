@@ -24,10 +24,15 @@ public class PathFinderAggregate
 	{
 		_enemyPositionService = enemyPositionService ?? throw new ArgumentNullException(nameof(enemyPositionService));
 	}
-	public void Initialize(int xDimension, int yDimension, MapCoordinate goalCell)
+	public void Initialize(MapCell[,] map, MapCoordinate goalCell)
 	{
-		_grid = new Grid(xDimension, yDimension);
 		_goalCell = goalCell;
+
+        var xDimension = map.GetLength(0);
+        var yDimension = map.GetLength(1);
+
+		_grid = new Grid(xDimension, yDimension);
+		AdjustInitialCostOfTraversal(map);
 	}
 
 	public void SetTileAsOccupied(MapCoordinate coordinate)
@@ -56,6 +61,22 @@ public class PathFinderAggregate
 
 		Emit(new PathFinderEvent.PathCalculated(enemyId, path));
 	}
+    private void AdjustInitialCostOfTraversal(MapCell[,] map)
+    {
+        for(int x = 0; x < map.GetLength(0); x++)
+        for (int y = 0; x < map.GetLength(1); y++)
+        {
+            switch (map[x,y])
+            {
+                    case WaterCell cell:
+						_grid.BlockCell(new Position(x,y));
+                        break;
+					case WallCell cell:
+						_grid.SetCellCost(new Position(x,y), 2.0f);
+                        break;
+            }
+        }
+    }
 
 	private void Emit(PathFinderEvent @event)
 		=> _events.OnNext(@event);

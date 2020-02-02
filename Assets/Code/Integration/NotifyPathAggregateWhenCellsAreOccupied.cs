@@ -20,10 +20,7 @@ class NotifyPathAggregateWhenCellsAreOccupied
 
     private void HandleMapInitialized(MapEvent.Initialized e)
     {
-        var xDimension = e.MapCells.GetLength(0);
-        var yDimension = e.MapCells.GetLength(1);
-
-        _pathFinder.Initialize(xDimension, yDimension, e.GoalCell);
+        _pathFinder.Initialize(e.MapCells, e.GoalCell);
     }
 
     private void HandleTowerRepaired(TowersEvent.TowerRepaired e)
