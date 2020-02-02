@@ -9,11 +9,22 @@ public class ScrapWalletAggregate
 
 	public ScrapWalletParameters Parameters { get; }
 
+	private int _currentAmount;
+
 	public ScrapWalletAggregate(ScrapWalletParameters parameters)
 	{
 		Parameters = parameters;
 
-		Observable.NextFrame().Subscribe(_ => Emit(new ScrapWalletEvent.Initialized(parameters.InitialScrap)));
+		_currentAmount = parameters.InitialAmount;
+
+		Observable.NextFrame().Subscribe(_ => Emit(new ScrapWalletEvent.Initialized(parameters.InitialAmount)));
+	}
+
+	public void Decrease(int amount)
+	{
+		_currentAmount -= amount;
+
+		Emit(new ScrapWalletEvent.Decreased(amount, _currentAmount));
 	}
 
 	private void Emit(ScrapWalletEvent @event)
@@ -24,10 +35,10 @@ public class ScrapWalletParameters
 {
 	public ScrapWalletParameters(int initialScrap)
 	{
-		InitialScrap = initialScrap;
+		InitialAmount = initialScrap;
 	}
 
-	public int InitialScrap { get; }
+	public int InitialAmount { get; }
 }
 
 public abstract class ScrapWalletEvent
@@ -40,5 +51,17 @@ public abstract class ScrapWalletEvent
 		}
 
 		public int Amount { get; }
+	}
+
+	public class Decreased : ScrapWalletEvent
+	{
+		public Decreased(int decreaseAmount, int currentAmount)
+		{
+			DecreasedAmount = decreaseAmount;
+			CurrentAmount = currentAmount;
+		}
+
+		public int DecreasedAmount { get; }
+		public int CurrentAmount { get; }
 	}
 }
