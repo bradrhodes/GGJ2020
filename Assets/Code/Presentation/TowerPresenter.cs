@@ -80,10 +80,10 @@ public class TowerPresenter : MonoBehaviour
 	private void FireBulletAt(EnemyIdentifier enemyId)
 	{
 		var toEnemy = (EnemyPositions[enemyId] - transform.position).normalized;
-		//turretSprite.transform.rotation = Quaternion.LookRotation(Vector3.forward, toEnemy);
 
 		var bullet = Instantiate(BulletPrefab);
 		bullet.transform.position = transform.position;
+		bullet.transform.rotation = Quaternion.LookRotation(Vector3.forward, toEnemy);
 
 		var bulletRigidBody = bullet.GetComponent<Rigidbody2D>();
 
