@@ -4,9 +4,7 @@ using Zenject;
 
 public class TowersPresenter : MonoBehaviour
 {
-	public GameObject TowerPrefab;
-
-	[Inject]
+    [Inject]
 	public TowersAggregate Towers { private get; set; }
 
 	[Inject]

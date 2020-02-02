@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 1630424311239262504}
   - component: {fileID: 4378063992022899971}
   m_Layer: 0
-  m_Name: Tower
+  m_Name: BasicTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +201,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 5dd41755a3f55554b9a60700acb667d3, type: 3}
-  m_Color: {r: 0, g: 0.60258484, b: 1, a: 0.32156864}
+  m_Color: {r: 0.9433962, g: 0.86774653, b: 0.86774653, a: 0.54901963}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
