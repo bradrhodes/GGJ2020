@@ -7,11 +7,15 @@ using Zenject;
 
 public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 {
-	private float _velocity;
+<<<<<<< HEAD
+    public float Velocity;
     public int MinVelocity = 3;
     public int NormalVelocity = 10;
     public float FreezeTime = 1;
     public int enemyHP = 5;
+=======
+	private float _velocity;
+>>>>>>> Increasing velocity over time
 
 	private List<Vector3> _path;
 	private Vector3 _target;
@@ -91,15 +95,15 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
 	{
         if (collision.gameObject.tag.Equals("Ice"))
         {
-            if (_velocity > MinVelocity)
+            if (Velocity > MinVelocity)
             {
                 Debug.Log("I got froze!");
                 StartCoroutine(Freezing());
-                _velocity *= 0.5f;
+                Velocity *= 0.5f;
             }
             else
             {
-                _velocity = MinVelocity;
+                Velocity = MinVelocity;
             }
         }
         else
@@ -117,13 +121,13 @@ public class EnemyPresenter : MonoBehaviour, IHaveIdentity<EnemyIdentifier>
     IEnumerator Freezing()
     {
         yield return new WaitForSeconds(FreezeTime);
-        if (_velocity < NormalVelocity / 2)
+        if (Velocity < NormalVelocity / 2)
         {
-            _velocity *= 2;
+            Velocity *= 2;
         }
         else
         {
-            _velocity = NormalVelocity;
+            Velocity = NormalVelocity;
         }
     }
 }
