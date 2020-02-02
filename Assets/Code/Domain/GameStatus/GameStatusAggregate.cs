@@ -15,6 +15,9 @@ public class GameStatusAggregate
 		_parameters = parameters;
 
 		_currentLives = parameters.Lives;
+
+		Observable.NextFrame()
+			.Subscribe(_ => Emit(new GameStatusEvent.LivesInitialized(_currentLives)));
 	}
 
 	public void LoseLife()
